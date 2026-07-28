@@ -87,7 +87,6 @@ else:
     # Footer
     st.sidebar.markdown("---")
     if getattr(api, "is_local_fallback", False):
-        st.sidebar.info("ℹ️ **Standalone Mode**\n\nFastAPI backend is offline. App is running locally/standalone using pre-compiled models.")
         st.sidebar.caption("System Status: Online (Standalone)")
     else:
         st.sidebar.caption("System Status: Online (API Connected)")
