@@ -86,9 +86,14 @@ else:
 
     # Footer
     st.sidebar.markdown("---")
-    st.sidebar.caption("System Status: Online")
-    st.sidebar.caption(f"Backend URL: {api.base_url}")
-    if "best_model_name" in model_info:
+    if getattr(api, "is_local_fallback", False):
+        st.sidebar.info("ℹ️ **Standalone Mode**\n\nFastAPI backend is offline. App is running locally/standalone using pre-compiled models.")
+        st.sidebar.caption("System Status: Online (Standalone)")
+    else:
+        st.sidebar.caption("System Status: Online (API Connected)")
+        st.sidebar.caption(f"Backend URL: {api.base_url}")
+        
+    if model_info and "best_model_name" in model_info:
         st.sidebar.caption(f"Active Model: {model_info['best_model_name']}")
 
     # Render pages
