@@ -106,13 +106,16 @@ class InferenceService:
         confidence = probability if prediction == 1 else (1.0 - probability)
         
         # Determine Risk Level and Recommendation
-        if probability < 0.3:
+        threshold = getattr(self.model, "threshold", 0.5)
+        low_bound = threshold * 0.5
+        
+        if probability < low_bound:
             risk_level = "Low"
             recommendation = (
                 "Employee shows low risk of attrition. Maintain current engagement "
                 "levels, recognize contributions, and continue periodic performance feedback."
             )
-        elif probability < 0.6:
+        elif probability < threshold:
             risk_level = "Medium"
             recommendation = (
                 "Employee shows medium risk of attrition. Recommend checking work-life "
@@ -155,10 +158,11 @@ class InferenceService:
             np.where(predictions == 1, probabilities, 1.0 - probabilities), 4
         )
         
-        # Set Risk levels
+        # Set Risk levels dynamically based on threshold
+        low_bound = threshold * 0.5
         output_df["Risk_Level"] = np.where(
-            probabilities < 0.3, "Low", 
-            np.where(probabilities < 0.6, "Medium", "High")
+            probabilities < low_bound, "Low", 
+            np.where(probabilities < threshold, "Medium", "High")
         )
         
         return output_df
