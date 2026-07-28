@@ -53,8 +53,9 @@ def validate_pipeline():
     X_test[X_num] = scaler_ref.transform(X_test[X_num])
     
     # Load model and verify reference predictions
-    ref_preds = service.model.predict(X_test)
     ref_probs = service.model.predict_proba(X_test)[:, 1]
+    threshold_ref = getattr(service.model, "threshold", 0.5)
+    ref_preds = (ref_probs >= threshold_ref).astype(int)
     
     # 2. Run Inference using InferenceService (Simulating batch prediction uploads)
     # Split the original raw df (df) into train and test splits to test inference on unseen raw records

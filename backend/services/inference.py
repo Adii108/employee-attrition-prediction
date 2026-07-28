@@ -98,8 +98,9 @@ class InferenceService:
         preprocessed_df = self.preprocess(df)
         
         # Run inference
-        prediction = int(self.model.predict(preprocessed_df)[0])
         probability = float(self.model.predict_proba(preprocessed_df)[0][1])
+        threshold = getattr(self.model, "threshold", 0.5)
+        prediction = 1 if probability >= threshold else 0
         
         # Confidence score (Probability of the predicted class)
         confidence = probability if prediction == 1 else (1.0 - probability)
@@ -143,8 +144,9 @@ class InferenceService:
         preprocessed_df = self.preprocess(df)
         
         # Run inference
-        predictions = self.model.predict(preprocessed_df)
         probabilities = self.model.predict_proba(preprocessed_df)[:, 1]
+        threshold = getattr(self.model, "threshold", 0.5)
+        predictions = (probabilities >= threshold).astype(int)
         
         # Add prediction columns
         output_df["Attrition_Prediction"] = predictions
