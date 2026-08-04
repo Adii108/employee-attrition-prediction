@@ -80,9 +80,9 @@ def get_preprocessing_pipeline():
     ]
     
     numerical_cols = [
-        "Age", "DailyRate", "DistanceFromHome", "Education", "EnvironmentSatisfaction", 
-        "HourlyRate", "JobInvolvement", "JobLevel", "JobSatisfaction", "MonthlyIncome", 
-        "MonthlyRate", "NumCompaniesWorked", "PercentSalaryHike", "PerformanceRating", 
+        "Age", "DistanceFromHome", "Education", "EnvironmentSatisfaction", 
+        "JobInvolvement", "JobLevel", "JobSatisfaction", "MonthlyIncome", 
+        "NumCompaniesWorked", "PercentSalaryHike", "PerformanceRating", 
         "RelationshipSatisfaction", "StockOptionLevel", "TotalWorkingYears", 
         "TrainingTimesLastYear", "WorkLifeBalance", "YearsAtCompany", "YearsInCurrentRole", 
         "YearsSinceLastPromotion", "YearsWithCurrManager", "Income_WorkingYears_Ratio", 

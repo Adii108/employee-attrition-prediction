@@ -58,9 +58,6 @@ def render_prediction():
             
             st.write("#### Salary & Rates")
             monthly_income = st.number_input("Monthly Income ($)", 1000, 30000, 5000)
-            monthly_rate = st.number_input("Monthly Rate ($)", 2000, 30000, 15000)
-            daily_rate = st.number_input("Daily Rate ($)", 100, 2000, 800)
-            hourly_rate = st.number_input("Hourly Rate ($)", 30, 150, 70)
             percent_salary_hike = st.slider("Percent Salary Hike (%)", 11, 25, 14)
             performance_rating = st.selectbox("Performance Rating", [3, 4], index=0)
 
@@ -84,21 +81,21 @@ def render_prediction():
         payload = {
             "Age": age,
             "BusinessTravel": business_travel,
-            "DailyRate": daily_rate,
+            "DailyRate": 800,  # Default (feature removed from model)
             "Department": dept,
             "DistanceFromHome": distance_from_home,
             "Education": 3,  # Set default values for features not in inputs but in CSV
             "EducationField": "Life Sciences", # default
             "EnvironmentSatisfaction": env_satisfaction,
             "Gender": gender,
-            "HourlyRate": hourly_rate,
+            "HourlyRate": 70,  # Default (feature removed from model)
             "JobInvolvement": job_involvement,
             "JobLevel": job_level,
             "JobRole": job_role,
             "JobSatisfaction": job_satisfaction,
             "MaritalStatus": marital_status,
             "MonthlyIncome": monthly_income,
-            "MonthlyRate": monthly_rate,
+            "MonthlyRate": 15000,  # Default (feature removed from model)
             "NumCompaniesWorked": num_companies,
             "OverTime": overtime,
             "PercentSalaryHike": percent_salary_hike,
