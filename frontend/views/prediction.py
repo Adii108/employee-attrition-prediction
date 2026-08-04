@@ -126,39 +126,85 @@ def render_prediction():
         else:
             # Display prediction results
             st.markdown("---")
-            st.write("### Prediction Results")
+            st.write("### 📊 Retention Analytics Dashboard")
 
-            # Risk level color formatting
-            risk = result["risk_level"]
-            prob = result["attrition_probability"]
-            confidence = result["confidence"]
-            prediction = result["attrition_prediction"]
+            risk = result.get("risk_level", "Low")
+            prob = result.get("attrition_probability", 0.0)
+            confidence = result.get("confidence", 0.5)
+            prediction = result.get("attrition_prediction", 0)
+            retention_priority = result.get("retention_priority", "LOW")
+            top_reasons = result.get("top_reasons", [])
+            negative_reasons = result.get("negative_reasons", [])
+            suggested_actions = result.get("suggested_actions", [])
 
             if risk == "Low":
-                color = "green"
+                color = "#2ec4b6"
                 status_text = "Low Risk of Attrition"
             elif risk == "Medium":
-                color = "orange"
+                color = "#ff9f1c"
                 status_text = "Medium Risk of Attrition"
             else:
-                color = "red"
+                color = "#e71d36"
                 status_text = "High Risk of Attrition"
 
-            # Create visual cards using html/css
+            # 3-column key metrics display
+            m1, m2, m3 = st.columns(3)
+            with m1:
+                st.metric(
+                    label="Prediction Outcome", 
+                    value="Likely to Leave" if prediction == 1 else "Likely to Stay",
+                    delta="Requires Attention!" if prediction == 1 else "Healthy Status",
+                    delta_color="inverse" if prediction == 1 else "normal"
+                )
+            with m2:
+                st.metric(
+                    label="Attrition Probability", 
+                    value=f"{prob * 100:.1f}%",
+                    delta=f"Confidence: {confidence * 100:.1f}%"
+                )
+            with m3:
+                st.metric(
+                    label="Retention Priority", 
+                    value=retention_priority,
+                    delta=f"Risk Category: {risk}",
+                    delta_color="inverse" if risk == "High" else "normal"
+                )
+
+            # Styled alert box
             st.markdown(
                 f"""
-                <div style="background-color: #f8f9fa; padding: 20px; border-left: 6px solid {color}; border-radius: 4px; margin-bottom: 20px;">
-                    <h4 style="margin: 0; color: {color};">{status_text}</h4>
-                    <p style="margin: 5px 0 0 0; font-size: 16px; color: #495057;">
-                        Probability: <b>{prob * 100:.2f}%</b> &nbsp;|&nbsp; 
-                        Confidence: <b>{confidence * 100:.2f}%</b> &nbsp;|&nbsp; 
-                        Model Outcome: <b>{"Leave (1)" if prediction == 1 else "Stay (0)"}</b>
+                <div style="background-color: #f8f9fa; padding: 18px; border-left: 6px solid {color}; border-radius: 4px; margin-bottom: 25px;">
+                    <h4 style="margin: 0 0 8px 0; color: {color}; font-weight: 600;">{status_text}</h4>
+                    <p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #495057;">
+                        {result.get("recommendation", "")}
                     </p>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
 
-            # Recommendation section
-            st.write("#### Retention Recommendation")
-            st.info(result["recommendation"])
+            # Two columns: Reasons vs Actions
+            c1, c2 = st.columns(2)
+            with c1:
+                st.write("#### 🔍 Top Attrition Drivers (SHAP)")
+                if prediction == 1:
+                    st.write("Below are the primary factors contributing to this employee's risk of leaving:")
+                    for reason in top_reasons:
+                        st.markdown(f"🔴 **{reason}**")
+                else:
+                    st.write("Below are the positive factors helping retain this employee, followed by risk factors:")
+                    if negative_reasons:
+                        for reason in negative_reasons:
+                            st.markdown(f"🟢 **{reason}**")
+                    if top_reasons:
+                        st.caption("Minor active risk factors:")
+                        for reason in top_reasons:
+                            st.markdown(f"⚠️ {reason}")
+                    if not negative_reasons and not top_reasons:
+                        st.info("No dominant attrition or retention factors detected.")
+
+            with c2:
+                st.write("#### 📋 Suggested HR Action Plan")
+                st.write("Recommended proactive measures to optimize employee retention:")
+                for action in suggested_actions:
+                    st.markdown(f"⚡ **{action}**")

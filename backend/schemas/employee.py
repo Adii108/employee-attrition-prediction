@@ -53,6 +53,10 @@ class PredictionResponse(BaseModel):
     risk_level: str = Field(..., description="Risk level categorisation (Low, Medium, High)")
     recommendation: str = Field(..., description="HR retention recommendation message")
     timestamp: str = Field(..., description="ISO 8601 timestamp of request execution")
+    top_reasons: List[str] = Field(default=[], description="Top drivers increasing attrition probability")
+    negative_reasons: List[str] = Field(default=[], description="Top drivers reducing attrition probability")
+    suggested_actions: List[str] = Field(default=[], description="Suggested retention actions for HR managers")
+    retention_priority: str = Field(default="LOW", description="Retention action priority rating (LOW, MEDIUM, HIGH)")
 
 class ModelInfoResponse(BaseModel):
     best_model_name: str = Field(..., description="Name of the best performing model loaded")
