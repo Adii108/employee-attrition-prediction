@@ -53,4 +53,4 @@ with open(js_file, "r", encoding="utf-8") as f:
 html_content = html_content.replace('<link rel="stylesheet" href="/static/css/stitch.css"/>', f'<style>\n{css_content}\n</style>')
 html_content = html_content.replace('<script src="/static/js/app.js"></script>', f'<script>\n{js_content}\n</script>')
 
-components.html(html_content, height=1100, scrolling=True)
+components.html(html_content, height=1200, scrolling=True)
