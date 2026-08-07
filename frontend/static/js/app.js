@@ -32,47 +32,62 @@ function initChartsWithRetry() {
 }
 
 
-// 1. Navigation Controller
+// 1. Navigation Controller & Global Tab Switcher
+window.switchTab = function(targetView) {
+    if (!targetView) return;
+
+    const sections = document.querySelectorAll('.view-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    sections.forEach(sec => {
+        if (sec.id === targetView) {
+            sec.classList.add('active');
+            sec.style.display = 'block';
+        } else {
+            sec.classList.remove('active');
+            sec.style.display = 'none';
+        }
+    });
+
+    navLinks.forEach(link => {
+        if (link.getAttribute('data-view') === targetView) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+
+    // Update page header title
+    const headerTitle = document.getElementById('headerTitle');
+    const headerDesc = document.getElementById('headerDesc');
+    if (targetView === 'viewDataEntry') {
+        if (headerTitle) headerTitle.textContent = 'Employee Data Entry';
+        if (headerDesc) headerDesc.textContent = 'Input employee metrics to generate an attrition risk prediction.';
+    } else if (targetView === 'viewAnalytics') {
+        if (headerTitle) headerTitle.textContent = 'Retention Intel Dashboard';
+        if (headerDesc) headerDesc.textContent = 'Predictive organizational risk breakdown & workforce retention metrics.';
+        initCharts();
+    } else if (targetView === 'viewUpload') {
+        if (headerTitle) headerTitle.textContent = 'Batch CSV Prediction';
+        if (headerDesc) headerDesc.textContent = 'Upload employee CSV spreadsheets for automated bulk attrition risk scoring.';
+    } else if (targetView === 'viewPerformance') {
+        if (headerTitle) headerTitle.textContent = 'Model Performance & Benchmarks';
+        if (headerDesc) headerDesc.textContent = 'Evaluation metrics comparing Logistic Regression, Random Forest, SVM, and XGBoost.';
+    }
+};
+
 function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.view-section');
-
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             const targetView = link.getAttribute('data-view');
-            if (!targetView) return;
-
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-
-            sections.forEach(sec => {
-                if (sec.id === targetView) {
-                    sec.classList.add('active');
-                } else {
-                    sec.classList.remove('active');
-                }
-            });
-
-            // Update page header title
-            const headerTitle = document.getElementById('headerTitle');
-            const headerDesc = document.getElementById('headerDesc');
-            if (targetView === 'viewDataEntry') {
-                if (headerTitle) headerTitle.textContent = 'Employee Data Entry';
-                if (headerDesc) headerDesc.textContent = 'Input employee metrics to generate an attrition risk prediction.';
-            } else if (targetView === 'viewAnalytics') {
-                if (headerTitle) headerTitle.textContent = 'Retention Intel Dashboard';
-                if (headerDesc) headerDesc.textContent = 'Predictive organizational risk breakdown & workforce retention metrics.';
-            } else if (targetView === 'viewUpload') {
-                if (headerTitle) headerTitle.textContent = 'Batch CSV Prediction';
-                if (headerDesc) headerDesc.textContent = 'Upload employee CSV spreadsheets for automated bulk attrition risk scoring.';
-            } else if (targetView === 'viewPerformance') {
-                if (headerTitle) headerTitle.textContent = 'Model Performance & Benchmarks';
-                if (headerDesc) headerDesc.textContent = 'Evaluation metrics comparing Logistic Regression, Random Forest, SVM, and XGBoost.';
-            }
+            if (targetView) window.switchTab(targetView);
         });
     });
 }
+
 
 // 2. Rating Button Scale Selector (1-4 pills)
 function initRatingPills() {

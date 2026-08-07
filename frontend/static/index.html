@@ -69,30 +69,31 @@
     </div>
     
     <div class="px-4 mt-6 mb-4">
-        <button onclick="document.querySelector('[data-view=viewDataEntry]').click()" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-xl shadow-md hover:bg-primary-container transition-all flex items-center justify-center space-x-2">
+        <button type="button" onclick="switchTab('viewDataEntry')" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-xl shadow-md hover:bg-primary-container transition-all flex items-center justify-center space-x-2 cursor-pointer">
             <span class="material-symbols-outlined text-sm font-bold">add</span>
             <span>New Prediction</span>
         </button>
     </div>
 
     <div class="flex flex-col flex-1 py-2 space-y-1.5 px-3 overflow-y-auto">
-        <button type="button" data-view="viewAnalytics" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
+        <button type="button" data-view="viewAnalytics" onclick="switchTab('viewAnalytics')" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">dashboard</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Analytics Dashboard</span>
         </button>
-        <button type="button" data-view="viewDataEntry" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
+        <button type="button" data-view="viewDataEntry" onclick="switchTab('viewDataEntry')" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">person_add</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Employee Data Entry</span>
         </button>
-        <button type="button" data-view="viewUpload" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
+        <button type="button" data-view="viewUpload" onclick="switchTab('viewUpload')" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">upload_file</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Batch CSV Upload</span>
         </button>
-        <button type="button" data-view="viewPerformance" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
+        <button type="button" data-view="viewPerformance" onclick="switchTab('viewPerformance')" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group w-full text-left cursor-pointer">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">monitoring</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Model Benchmarks</span>
         </button>
     </div>
+
 
 
 
