@@ -1513,7 +1513,7 @@ async function fetchBackendStatus() {
     }
 }
 
-// 8. 20 Analytics Visualizations Renderers & Model Evaluation Charts
+// 8. 20 Analytics Visualizations Renderers & Model Evaluation Charts (Explicit Styles & Dimensions)
 function initCharts() {
     renderSvgDeptChart();
     renderSvgJobRoleChart();
@@ -1541,23 +1541,23 @@ function renderSvgDeptChart() {
     const container = document.getElementById('chartDeptRiskContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex justify-between items-center mb-2 text-xs font-semibold text-on-surface-variant">
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; font-weight: 600; color: #464553;">
                 <span>Department Name</span>
                 <span>Average Risk Rate (%)</span>
             </div>
-            <div class="flex-1 flex flex-col justify-around border-b border-l border-surface-variant p-3 space-y-4">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 12px;">
                 <div>
-                    <div class="flex justify-between text-xs font-bold mb-1"><span class="text-on-surface">Sales</span><span class="text-rose-600 font-extrabold">20.6%</span></div>
-                    <div class="w-full bg-surface-container-high h-4 rounded-full overflow-hidden"><div class="bg-rose-600 h-full rounded-full" style="width: 68.6%;"></div></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 4px;"><span style="color: #0b1c30;">Sales</span><span style="color: #ba1a1a; font-weight: 800;">20.6%</span></div>
+                    <div style="width: 100%; background-color: #dce9ff; height: 16px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #ba1a1a; height: 100%; width: 68.6%; border-radius: 9999px;"></div></div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-xs font-bold mb-1"><span class="text-on-surface">Human Resources</span><span class="text-amber-600 font-extrabold">19.0%</span></div>
-                    <div class="w-full bg-surface-container-high h-4 rounded-full overflow-hidden"><div class="bg-amber-500 h-full rounded-full" style="width: 63.3%;"></div></div>
+                    <div style="display: flex; justify-between; font-size: 12px; font-weight: 700; margin-bottom: 4px;"><span style="color: #0b1c30;">Human Resources</span><span style="color: #f49d09; font-weight: 800;">19.0%</span></div>
+                    <div style="width: 100%; background-color: #dce9ff; height: 16px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #f49d09; height: 100%; width: 63.3%; border-radius: 9999px;"></div></div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-xs font-bold mb-1"><span class="text-on-surface">Research & Development</span><span class="text-primary font-extrabold">13.8%</span></div>
-                    <div class="w-full bg-surface-container-high h-4 rounded-full overflow-hidden"><div class="bg-primary h-full rounded-full" style="width: 46.0%;"></div></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 4px;"><span style="color: #0b1c30;">Research & Development</span><span style="color: #1f108e; font-weight: 800;">13.8%</span></div>
+                    <div style="width: 100%; background-color: #dce9ff; height: 16px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 46.0%; border-radius: 9999px;"></div></div>
                 </div>
             </div>
         </div>
@@ -1568,13 +1568,13 @@ function renderSvgJobRoleChart() {
     const container = document.getElementById('chartJobRoleRiskContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex flex-col justify-around space-y-2 border-b border-l border-surface-variant p-2">
-                <div><div class="flex justify-between text-xs font-bold"><span>Sales Representative</span><span class="text-rose-600">39.8%</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-rose-600 h-full rounded-full" style="width: 80%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Lab Technician</span><span class="text-amber-600">23.9%</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-amber-500 h-full rounded-full" style="width: 48%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Human Resources</span><span class="text-amber-600">23.1%</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-amber-500 h-full rounded-full" style="width: 46%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Research Scientist</span><span class="text-emerald-700">16.1%</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-emerald-600 h-full rounded-full" style="width: 32%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Research Director</span><span class="text-emerald-700">2.5%</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-emerald-600 h-full rounded-full" style="width: 5%;"></div></div></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px;">
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Sales Representative</span><span style="color: #ba1a1a;">39.8%</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #ba1a1a; height: 100%; width: 80%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Lab Technician</span><span style="color: #f49d09;">23.9%</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #f49d09; height: 100%; width: 48%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Human Resources</span><span style="color: #f49d09;">23.1%</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #f49d09; height: 100%; width: 46%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Research Scientist</span><span style="color: #006c49;">16.1%</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #006c49; height: 100%; width: 32%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Research Director</span><span style="color: #006c49;">2.5%</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #006c49; height: 100%; width: 8%; border-radius: 9999px;"></div></div></div>
             </div>
         </div>
     `;
@@ -1584,12 +1584,12 @@ function renderSvgIncomeChart() {
     const container = document.getElementById('chartIncomeRiskContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-2 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">32.5%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 80%;"></div><span class="text-[10px] mt-1 font-semibold">&lt;$3k</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">18.2%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 45%;"></div><span class="text-[10px] mt-1 font-semibold">$3k-6k</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">11.4%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 28%;"></div><span class="text-[10px] mt-1 font-semibold">$6k-10k</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">6.8%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 17%;"></div><span class="text-[10px] mt-1 font-semibold">$10k+</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">32.5%</span><div style="width: 80%; background-color: #ba1a1a; height: 80%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">&lt;$3k</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">18.2%</span><div style="width: 80%; background-color: #f49d09; height: 45%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">$3k-6k</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">11.4%</span><div style="width: 80%; background-color: #006c49; height: 28%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">$6k-10k</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">6.8%</span><div style="width: 80%; background-color: #006c49; height: 17%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">$10k+</span></div>
             </div>
         </div>
     `;
@@ -1599,10 +1599,10 @@ function renderSvgOvertimeChart() {
     const container = document.getElementById('chartOvertimeRiskContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-6 border-b border-l border-surface-variant p-4 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-xs font-bold text-rose-600">30.5%</span><div class="w-16 bg-rose-600 rounded-t-lg shadow-sm" style="height: 76%;"></div><span class="text-xs font-bold text-on-surface mt-2">Regular Overtime</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-xs font-bold text-emerald-700">10.4%</span><div class="w-16 bg-emerald-600 rounded-t-lg shadow-sm" style="height: 26%;"></div><span class="text-xs font-bold text-on-surface mt-2">No Overtime</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 12px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 12px; font-weight: 700; color: #ba1a1a;">30.5%</span><div style="width: 60px; background-color: #ba1a1a; height: 76%; border-radius: 8px 8px 0 0;"></div><span style="font-size: 12px; font-weight: 700; margin-top: 8px;">Overtime</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 12px; font-weight: 700; color: #006c49;">10.4%</span><div style="width: 60px; background-color: #006c49; height: 26%; border-radius: 8px 8px 0 0;"></div><span style="font-size: 12px; font-weight: 700; margin-top: 8px;">No Overtime</span></div>
             </div>
         </div>
     `;
@@ -1612,12 +1612,12 @@ function renderSvgJobSatChart() {
     const container = document.getElementById('chartJobSatRiskContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-3 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">22.8%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 70%;"></div><span class="text-[10px] mt-1 font-semibold">1 Low</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">16.5%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 50%;"></div><span class="text-[10px] mt-1 font-semibold">2 Medium</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">14.6%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 44%;"></div><span class="text-[10px] mt-1 font-semibold">3 High</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">11.3%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 34%;"></div><span class="text-[10px] mt-1 font-semibold">4 Very High</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">22.8%</span><div style="width: 80%; background-color: #ba1a1a; height: 70%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">1 Low</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">16.5%</span><div style="width: 80%; background-color: #f49d09; height: 50%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">2 Medium</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">14.6%</span><div style="width: 80%; background-color: #006c49; height: 44%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">3 High</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">11.3%</span><div style="width: 80%; background-color: #006c49; height: 34%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">4 Very High</span></div>
             </div>
         </div>
     `;
@@ -1627,12 +1627,12 @@ function renderSvgWlbChart() {
     const container = document.getElementById('chartWlbRiskContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-3 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">31.2%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 80%;"></div><span class="text-[10px] mt-1 font-semibold">1 Bad</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">16.8%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 43%;"></div><span class="text-[10px] mt-1 font-semibold">2 Good</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">14.2%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 36%;"></div><span class="text-[10px] mt-1 font-semibold">3 Better</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">17.6%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 45%;"></div><span class="text-[10px] mt-1 font-semibold">4 Best</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">31.2%</span><div style="width: 80%; background-color: #ba1a1a; height: 80%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">1 Bad</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">16.8%</span><div style="width: 80%; background-color: #f49d09; height: 43%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">2 Good</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">14.2%</span><div style="width: 80%; background-color: #006c49; height: 36%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">3 Better</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">17.6%</span><div style="width: 80%; background-color: #006c49; height: 45%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">4 Best</span></div>
             </div>
         </div>
     `;
@@ -1642,12 +1642,12 @@ function renderSvgYearsCompanyChart() {
     const container = document.getElementById('chartYearsCompanyContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-2 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">34.6%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 85%;"></div><span class="text-[10px] mt-1 font-semibold">0-2 yrs</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">18.4%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 46%;"></div><span class="text-[10px] mt-1 font-semibold">3-5 yrs</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">12.1%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 30%;"></div><span class="text-[10px] mt-1 font-semibold">6-10 yrs</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">8.2%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 20%;"></div><span class="text-[10px] mt-1 font-semibold">10+ yrs</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">34.6%</span><div style="width: 80%; background-color: #ba1a1a; height: 85%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">0-2 yrs</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">18.4%</span><div style="width: 80%; background-color: #f49d09; height: 46%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">3-5 yrs</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">12.1%</span><div style="width: 80%; background-color: #006c49; height: 30%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">6-10 yrs</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">8.2%</span><div style="width: 80%; background-color: #006c49; height: 20%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">10+ yrs</span></div>
             </div>
         </div>
     `;
@@ -1657,12 +1657,12 @@ function renderSvgPromoDelayChart() {
     const container = document.getElementById('chartPromoDelayContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-2 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">13.2%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 32%;"></div><span class="text-[10px] mt-1 font-semibold">0-1 yrs</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">15.0%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 37%;"></div><span class="text-[10px] mt-1 font-semibold">2-3 yrs</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">22.4%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 56%;"></div><span class="text-[10px] mt-1 font-semibold">4-6 yrs</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">31.8%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 80%;"></div><span class="text-[10px] mt-1 font-semibold">7+ yrs</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">13.2%</span><div style="width: 80%; background-color: #006c49; height: 32%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">0-1 yrs</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">15.0%</span><div style="width: 80%; background-color: #006c49; height: 37%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">2-3 yrs</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">22.4%</span><div style="width: 80%; background-color: #f49d09; height: 56%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">4-6 yrs</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">31.8%</span><div style="width: 80%; background-color: #ba1a1a; height: 80%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">7+ yrs</span></div>
             </div>
         </div>
     `;
@@ -1672,12 +1672,12 @@ function renderSvgDistanceChart() {
     const container = document.getElementById('chartDistanceContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-2 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">12.5%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 31%;"></div><span class="text-[10px] mt-1 font-semibold">1-5 mi</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">14.8%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 37%;"></div><span class="text-[10px] mt-1 font-semibold">6-10 mi</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">19.2%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 48%;"></div><span class="text-[10px] mt-1 font-semibold">11-20 mi</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">28.4%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 71%;"></div><span class="text-[10px] mt-1 font-semibold">20+ mi</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">12.5%</span><div style="width: 80%; background-color: #006c49; height: 31%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">1-5 mi</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">14.8%</span><div style="width: 80%; background-color: #006c49; height: 37%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">6-10 mi</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">19.2%</span><div style="width: 80%; background-color: #f49d09; height: 48%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">11-20 mi</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">28.4%</span><div style="width: 80%; background-color: #ba1a1a; height: 71%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">20+ mi</span></div>
             </div>
         </div>
     `;
@@ -1687,12 +1687,12 @@ function renderSvgAgeDistChart() {
     const container = document.getElementById('chartAgeDistContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-around space-x-2 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-rose-600">38.2%</span><div class="w-full bg-rose-600 rounded-t-sm" style="height: 90%;"></div><span class="text-[10px] mt-1 font-semibold">18-25</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-amber-600">21.5%</span><div class="w-full bg-amber-500 rounded-t-sm" style="height: 52%;"></div><span class="text-[10px] mt-1 font-semibold">26-35</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">11.8%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 29%;"></div><span class="text-[10px] mt-1 font-semibold">36-45</span></div>
-                <div class="flex-1 flex flex-col items-center"><span class="text-[10px] font-bold text-emerald-700">9.4%</span><div class="w-full bg-emerald-600 rounded-t-sm" style="height: 23%;"></div><span class="text-[10px] mt-1 font-semibold">46+</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a;">38.2%</span><div style="width: 80%; background-color: #ba1a1a; height: 90%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">18-25</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #f49d09;">21.5%</span><div style="width: 80%; background-color: #f49d09; height: 52%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">26-35</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">11.8%</span><div style="width: 80%; background-color: #006c49; height: 29%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">36-45</span></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49;">9.4%</span><div style="width: 80%; background-color: #006c49; height: 23%; border-radius: 4px 4px 0 0;"></div><span style="font-size: 10px; font-weight: 600; margin-top: 4px;">46+</span></div>
             </div>
         </div>
     `;
@@ -1702,16 +1702,16 @@ function renderSvgHeatmapChart() {
     const container = document.getElementById('chartHeatmapContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2 text-xs">
-            <div class="grid grid-cols-4 gap-1 h-44">
-                <div class="bg-rose-600 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>OverTime</span><span>+0.72</span></div>
-                <div class="bg-rose-500 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>Income</span><span>-0.58</span></div>
-                <div class="bg-amber-500 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>JobSat</span><span>-0.44</span></div>
-                <div class="bg-amber-400 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>Age</span><span>-0.38</span></div>
-                <div class="bg-rose-400 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>Distance</span><span>+0.35</span></div>
-                <div class="bg-emerald-600 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>Stock</span><span>-0.31</span></div>
-                <div class="bg-emerald-500 text-white font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>YearsRole</span><span>-0.29</span></div>
-                <div class="bg-rose-300 text-on-surface font-bold flex flex-col items-center justify-center rounded p-1 text-[10px]"><span>PromoYr</span><span>+0.27</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; height: 170px;">
+                <div style="background-color: #ba1a1a; color: #ffffff; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>OverTime</span><span>+0.72</span></div>
+                <div style="background-color: #e11d48; color: #ffffff; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>Income</span><span>-0.58</span></div>
+                <div style="background-color: #f49d09; color: #ffffff; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>JobSat</span><span>-0.44</span></div>
+                <div style="background-color: #fbbf24; color: #0b1c30; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>Age</span><span>-0.38</span></div>
+                <div style="background-color: #f87171; color: #ffffff; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>Distance</span><span>+0.35</span></div>
+                <div style="background-color: #006c49; color: #ffffff; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>Stock</span><span>-0.31</span></div>
+                <div style="background-color: #10b981; color: #ffffff; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>YearsRole</span><span>-0.29</span></div>
+                <div style="background-color: #fca5a5; color: #0b1c30; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; padding: 4px; font-size: 11px;"><span>PromoYr</span><span>+0.27</span></div>
             </div>
         </div>
     `;
@@ -1721,13 +1721,13 @@ function renderSvgFeatureImpChart() {
     const container = document.getElementById('chartFeatureImpContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex flex-col justify-around space-y-2 border-b border-l border-surface-variant p-2">
-                <div><div class="flex justify-between text-xs font-bold"><span>OverTime</span><span class="text-primary">0.245</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-primary h-full rounded-full" style="width: 95%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Monthly Income</span><span class="text-primary">0.182</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-primary h-full rounded-full" style="width: 75%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Age</span><span class="text-primary">0.145</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-primary h-full rounded-full" style="width: 60%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Total Working Years</span><span class="text-primary">0.128</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-primary h-full rounded-full" style="width: 52%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Job Satisfaction</span><span class="text-primary">0.095</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-primary h-full rounded-full" style="width: 40%;"></div></div></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px;">
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>OverTime Requirement</span><span style="color: #1f108e;">0.245</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 95%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Monthly Income</span><span style="color: #1f108e;">0.182</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 75%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Age</span><span style="color: #1f108e;">0.145</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 60%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Total Working Years</span><span style="color: #1f108e;">0.128</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 52%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Job Satisfaction</span><span style="color: #1f108e;">0.095</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 40%; border-radius: 9999px;"></div></div></div>
             </div>
         </div>
     `;
@@ -1737,16 +1737,16 @@ function renderSvgShapSummaryChart() {
     const container = document.getElementById('chartShapSummaryContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex justify-between text-xs font-bold text-on-surface-variant mb-2">
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #464553; margin-bottom: 8px;">
                 <span>Feature</span>
-                <span class="text-rose-600">High Risk &lt;--- SHAP Value ---&gt; Low Risk</span>
+                <span style="color: #ba1a1a;">High Risk &lt;--- SHAP Value ---&gt; Low Risk</span>
             </div>
-            <div class="flex-1 flex flex-col justify-around border-b border-l border-surface-variant p-2 space-y-2">
-                <div class="flex items-center justify-between text-xs font-semibold"><span>OverTime</span><div class="w-48 bg-rose-200 h-3 rounded flex items-center px-1"><span class="w-3 h-3 rounded-full bg-rose-600"></span></div></div>
-                <div class="flex items-center justify-between text-xs font-semibold"><span>MonthlyIncome</span><div class="w-48 bg-emerald-200 h-3 rounded flex items-center justify-end px-1"><span class="w-3 h-3 rounded-full bg-emerald-600"></span></div></div>
-                <div class="flex items-center justify-between text-xs font-semibold"><span>JobSatisfaction</span><div class="w-48 bg-emerald-100 h-3 rounded flex items-center justify-end px-1"><span class="w-3 h-3 rounded-full bg-emerald-600"></span></div></div>
-                <div class="flex items-center justify-between text-xs font-semibold"><span>DistanceFromHome</span><div class="w-48 bg-rose-100 h-3 rounded flex items-center px-1"><span class="w-3 h-3 rounded-full bg-rose-600"></span></div></div>
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 600;"><span>OverTime</span><div style="width: 180px; background-color: #ffdad6; height: 14px; border-radius: 6px; display: flex; align-items: center; padding: 0 4px;"><span style="width: 10px; height: 10px; border-radius: 50%; background-color: #ba1a1a;"></span></div></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 600;"><span>MonthlyIncome</span><div style="width: 180px; background-color: #d7f5e5; height: 14px; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding: 0 4px;"><span style="width: 10px; height: 10px; border-radius: 50%; background-color: #006c49;"></span></div></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 600;"><span>JobSatisfaction</span><div style="width: 180px; background-color: #d7f5e5; height: 14px; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding: 0 4px;"><span style="width: 10px; height: 10px; border-radius: 50%; background-color: #006c49;"></span></div></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 600;"><span>DistanceFromHome</span><div style="width: 180px; background-color: #ffdad6; height: 14px; border-radius: 6px; display: flex; align-items: center; padding: 0 4px;"><span style="width: 10px; height: 10px; border-radius: 50%; background-color: #ba1a1a;"></span></div></div>
             </div>
         </div>
     `;
@@ -1756,15 +1756,15 @@ function renderSvgRocCurveChart() {
     const container = document.getElementById('chartRocCurveContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex justify-between items-center text-xs font-bold mb-1">
-                <span>ROC-AUC: <strong class="text-primary">0.8241</strong></span>
-                <span class="text-emerald-700">Excellent Classifier Performance</span>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; margin-bottom: 4px;">
+                <span>ROC-AUC: <strong style="color: #1f108e;">0.8241</strong></span>
+                <span style="color: #006c49;">Excellent Classifier Performance</span>
             </div>
-            <div class="flex-1 border-b border-l border-surface-variant relative p-2 h-44 flex items-center justify-center">
-                <svg viewBox="0 0 100 100" class="w-full h-full text-primary">
-                    <line x1="0" y1="100" x2="100" y2="0" stroke="#c8c4d5" stroke-dasharray="2" stroke-width="1"/>
-                    <path d="M 0,100 Q 15,20 100,0" fill="none" stroke="#1f108e" stroke-width="3"/>
+            <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; position: relative; padding: 8px; height: 170px; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 100 100" style="width: 100%; height: 150px;">
+                    <line x1="0" y1="100" x2="100" y2="0" stroke="#c8c4d5" stroke-dasharray="3" stroke-width="1.5"/>
+                    <path d="M 0,100 Q 15,15 100,0" fill="none" stroke="#1f108e" stroke-width="3"/>
                 </svg>
             </div>
         </div>
@@ -1775,14 +1775,14 @@ function renderSvgPrCurveChart() {
     const container = document.getElementById('chartPrCurveContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex justify-between items-center text-xs font-bold mb-1">
-                <span>Precision-Recall AUC: <strong class="text-primary">0.7892</strong></span>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; margin-bottom: 4px;">
+                <span>Precision-Recall AUC: <strong style="color: #1f108e;">0.7892</strong></span>
                 <span>Threshold: 0.50</span>
             </div>
-            <div class="flex-1 border-b border-l border-surface-variant relative p-2 h-44 flex items-center justify-center">
-                <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-700">
-                    <path d="M 0,10 Q 50,15 100,100" fill="none" stroke="#006c49" stroke-width="3"/>
+            <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; position: relative; padding: 8px; height: 170px; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 100 100" style="width: 100%; height: 150px;">
+                    <path d="M 0,10 Q 60,15 100,100" fill="none" stroke="#006c49" stroke-width="3"/>
                 </svg>
             </div>
         </div>
@@ -1793,27 +1793,27 @@ function renderSvgConfusionMatrixChart() {
     const container = document.getElementById('chartConfusionMatrixContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-center p-2 text-xs">
-            <div class="grid grid-cols-2 gap-2 h-44">
-                <div class="bg-emerald-100 border border-emerald-300 rounded-xl p-3 flex flex-col justify-center items-center">
-                    <span class="text-[10px] font-bold text-emerald-800 uppercase">True Negative (TN)</span>
-                    <span class="text-2xl font-black text-emerald-900">236</span>
-                    <span class="text-[10px] text-emerald-700">Stay predicted correctly</span>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: center; padding: 8px; font-size: 12px;">
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; height: 170px;">
+                <div style="background-color: #d7f5e5; border: 1px solid #6cf8bb; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 10px; font-weight: 700; color: #006c49; text-transform: uppercase;">True Negative (TN)</span>
+                    <span style="font-size: 24px; font-weight: 900; color: #006c49;">236</span>
+                    <span style="font-size: 10px; color: #006c49;">Stay predicted correctly</span>
                 </div>
-                <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 flex flex-col justify-center items-center">
-                    <span class="text-[10px] font-bold text-rose-800 uppercase">False Positive (FP)</span>
-                    <span class="text-2xl font-black text-rose-900">10</span>
-                    <span class="text-[10px] text-rose-700">False Alarm</span>
+                <div style="background-color: #ffdad6; border: 1px solid #ffb4ab; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 10px; font-weight: 700; color: #ba1a1a; text-transform: uppercase;">False Positive (FP)</span>
+                    <span style="font-size: 24px; font-weight: 900; color: #ba1a1a;">10</span>
+                    <span style="font-size: 10px; color: #ba1a1a;">False Alarm</span>
                 </div>
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 flex flex-col justify-center items-center">
-                    <span class="text-[10px] font-bold text-amber-800 uppercase">False Negative (FN)</span>
-                    <span class="text-2xl font-black text-amber-900">33</span>
-                    <span class="text-[10px] text-amber-700">Missed Attrition</span>
+                <div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 10px; font-weight: 700; color: #b45309; text-transform: uppercase;">False Negative (FN)</span>
+                    <span style="font-size: 24px; font-weight: 900; color: #b45309;">33</span>
+                    <span style="font-size: 10px; color: #b45309;">Missed Attrition</span>
                 </div>
-                <div class="bg-primary-container border border-primary text-on-primary-container rounded-xl p-3 flex flex-col justify-center items-center">
-                    <span class="text-[10px] font-bold uppercase">True Positive (TP)</span>
-                    <span class="text-2xl font-black text-white">21</span>
-                    <span class="text-[10px] font-medium">Leave predicted correctly</span>
+                <div style="background-color: #1f108e; border: 1px solid #3730a3; color: #ffffff; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase;">True Positive (TP)</span>
+                    <span style="font-size: 24px; font-weight: 900; color: #ffffff;">21</span>
+                    <span style="font-size: 10px;">Leave predicted correctly</span>
                 </div>
             </div>
         </div>
@@ -1824,12 +1824,12 @@ function renderSvgModelCompareChart() {
     const container = document.getElementById('chartModelCompareContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex flex-col justify-around space-y-2 border-b border-l border-surface-variant p-2">
-                <div><div class="flex justify-between text-xs font-bold"><span class="text-primary">SVM (Best)</span><span class="text-primary">87.07% Acc</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-primary h-full rounded-full" style="width: 87%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Random Forest</span><span>85.71% Acc</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-indigo-600 h-full rounded-full" style="width: 85%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>Logistic Regression</span><span>85.37% Acc</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-indigo-500 h-full rounded-full" style="width: 85%;"></div></div></div>
-                <div><div class="flex justify-between text-xs font-bold"><span>XGBoost</span><span>84.01% Acc</span></div><div class="w-full bg-surface-container-high h-3 rounded-full"><div class="bg-indigo-400 h-full rounded-full" style="width: 84%;"></div></div></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px;">
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span style="color: #1f108e;">SVM (Best)</span><span style="color: #1f108e;">87.07% Acc</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 87%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Random Forest</span><span>85.71% Acc</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #3730a3; height: 100%; width: 85%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>Logistic Regression</span><span>85.37% Acc</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #4f46e5; height: 100%; width: 85%; border-radius: 9999px;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700;"><span>XGBoost</span><span>84.01% Acc</span></div><div style="width: 100%; background-color: #dce9ff; height: 12px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #6366f1; height: 100%; width: 84%; border-radius: 9999px;"></div></div></div>
             </div>
         </div>
     `;
@@ -1839,22 +1839,22 @@ function renderSvgRiskDistChart() {
     const container = document.getElementById('chartRiskDistContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-center justify-around space-x-4 border-b border-l border-surface-variant p-4">
-                <div class="text-center">
-                    <span class="text-xs font-bold text-emerald-800">LOW RISK</span>
-                    <p class="font-headline-lg text-2xl font-bold text-emerald-700">1,091</p>
-                    <span class="text-[10px] text-on-surface-variant">74.2% workforce</span>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-center; justify-content: space-around; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 12px;">
+                <div style="text-align: center; background-color: #d7f5e5; border: 1px solid #6cf8bb; padding: 12px; border-radius: 12px; flex: 1; margin: 0 4px;">
+                    <span style="font-size: 11px; font-weight: 800; color: #006c49;">LOW RISK</span>
+                    <p style="font-size: 24px; font-weight: 900; color: #006c49; margin: 4px 0;">1,091</p>
+                    <span style="font-size: 10px; color: #006c49;">74.2% workforce</span>
                 </div>
-                <div class="text-center">
-                    <span class="text-xs font-bold text-amber-800">MEDIUM RISK</span>
-                    <p class="font-headline-lg text-2xl font-bold text-amber-700">237</p>
-                    <span class="text-[10px] text-on-surface-variant">16.1% workforce</span>
+                <div style="text-align: center; background-color: #fef3c7; border: 1px solid #fcd34d; padding: 12px; border-radius: 12px; flex: 1; margin: 0 4px;">
+                    <span style="font-size: 11px; font-weight: 800; color: #b45309;">MEDIUM RISK</span>
+                    <p style="font-size: 24px; font-weight: 900; color: #b45309; margin: 4px 0;">237</p>
+                    <span style="font-size: 10px; color: #b45309;">16.1% workforce</span>
                 </div>
-                <div class="text-center">
-                    <span class="text-xs font-bold text-rose-800">HIGH RISK</span>
-                    <p class="font-headline-lg text-2xl font-bold text-rose-700">142</p>
-                    <span class="text-[10px] text-on-surface-variant">9.7% workforce</span>
+                <div style="text-align: center; background-color: #ffdad6; border: 1px solid #ffb4ab; padding: 12px; border-radius: 12px; flex: 1; margin: 0 4px;">
+                    <span style="font-size: 11px; font-weight: 800; color: #ba1a1a;">HIGH RISK</span>
+                    <p style="font-size: 24px; font-weight: 900; color: #ba1a1a; margin: 4px 0;">142</p>
+                    <span style="font-size: 10px; color: #ba1a1a;">9.7% workforce</span>
                 </div>
             </div>
         </div>
@@ -1865,16 +1865,16 @@ function renderSvgProbHistChart() {
     const container = document.getElementById('chartProbHistContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex-1 flex items-end justify-between space-x-1 border-b border-l border-surface-variant p-2 h-44">
-                <div class="flex-1 bg-emerald-600 rounded-t-sm" style="height: 90%;" title="0-10%"></div>
-                <div class="flex-1 bg-emerald-600 rounded-t-sm" style="height: 75%;" title="10-20%"></div>
-                <div class="flex-1 bg-emerald-600 rounded-t-sm" style="height: 45%;" title="20-30%"></div>
-                <div class="flex-1 bg-amber-500 rounded-t-sm" style="height: 25%;" title="30-40%"></div>
-                <div class="flex-1 bg-amber-500 rounded-t-sm" style="height: 20%;" title="40-50%"></div>
-                <div class="flex-1 bg-rose-600 rounded-t-sm" style="height: 15%;" title="50-60%"></div>
-                <div class="flex-1 bg-rose-600 rounded-t-sm" style="height: 10%;" title="60-70%"></div>
-                <div class="flex-1 bg-rose-600 rounded-t-sm" style="height: 5%;" title="70-80%"></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px;">
+            <div style="flex: 1; display: flex; items-end; justify-content: space-between; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 170px;">
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #006c49; height: 90%; border-radius: 4px 4px 0 0;" title="0-10%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #006c49; height: 75%; border-radius: 4px 4px 0 0;" title="10-20%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #006c49; height: 45%; border-radius: 4px 4px 0 0;" title="20-30%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #f49d09; height: 25%; border-radius: 4px 4px 0 0;" title="30-40%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #f49d09; height: 20%; border-radius: 4px 4px 0 0;" title="40-50%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #ba1a1a; height: 15%; border-radius: 4px 4px 0 0;" title="50-60%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #ba1a1a; height: 10%; border-radius: 4px 4px 0 0;" title="60-70%"></div></div>
+                <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 2px;"><div style="width: 100%; background-color: #ba1a1a; height: 5%; border-radius: 4px 4px 0 0;" title="70-80%"></div></div>
             </div>
         </div>
     `;
@@ -1884,11 +1884,11 @@ function renderSvgDeptRankChart() {
     const container = document.getElementById('chartDeptRankContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2 text-xs">
-            <div class="space-y-3 p-2">
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-rose-50 border border-rose-200"><div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-[10px]">1</span><span class="font-bold text-rose-900">Sales Department</span></div><span class="font-black text-rose-700">20.6% Risk</span></div>
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-amber-50 border border-amber-200"><div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-[10px]">2</span><span class="font-bold text-amber-900">Human Resources</span></div><span class="font-black text-amber-700">19.0% Risk</span></div>
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200"><div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-[10px]">3</span><span class="font-bold text-emerald-900">Research & Development</span></div><span class="font-black text-emerald-700">13.8% Risk</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 220px; justify-content: space-between; padding: 8px; font-size: 12px;">
+            <div style="display: flex; flex-direction: column; justify-content: space-around; height: 170px; padding: 4px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 12px; background-color: #ffdad6; border: 1px solid #ffb4ab;"><div style="display: flex; align-items: center; gap: 8px;"><span style="width: 24px; height: 24px; border-radius: 50%; background-color: #ba1a1a; color: #ffffff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 10px;">1</span><span style="font-weight: 700; color: #ba1a1a;">Sales Department</span></div><span style="font-weight: 900; color: #ba1a1a;">20.6% Risk</span></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 12px; background-color: #fef3c7; border: 1px solid #fcd34d;"><div style="display: flex; align-items: center; gap: 8px;"><span style="width: 24px; height: 24px; border-radius: 50%; background-color: #f49d09; color: #ffffff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 10px;">2</span><span style="font-weight: 700; color: #b45309;">Human Resources</span></div><span style="font-weight: 900; color: #b45309;">19.0% Risk</span></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-radius: 12px; background-color: #d7f5e5; border: 1px solid #6cf8bb;"><div style="display: flex; align-items: center; gap: 8px;"><span style="width: 24px; height: 24px; border-radius: 50%; background-color: #006c49; color: #ffffff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 10px;">3</span><span style="font-weight: 700; color: #006c49;">Research & Development</span></div><span style="font-weight: 900; color: #006c49;">13.8% Risk</span></div>
             </div>
         </div>
     `;
@@ -1904,11 +1904,11 @@ function renderSvgPerfConfusionMatrix() {
     const container = document.getElementById('chartPerfConfusionMatrixContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="grid grid-cols-2 gap-2 h-full text-xs">
-            <div class="bg-emerald-100 p-3 rounded-xl border border-emerald-300 text-center"><span class="font-bold text-emerald-800">TN: 236</span></div>
-            <div class="bg-rose-50 p-3 rounded-xl border border-rose-200 text-center"><span class="font-bold text-rose-800">FP: 10</span></div>
-            <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-center"><span class="font-bold text-amber-800">FN: 33</span></div>
-            <div class="bg-primary-container p-3 rounded-xl border border-primary text-on-primary-container text-center"><span class="font-bold text-white">TP: 21</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; height: 100%; min-height: 180px; font-size: 11px;">
+            <div style="background-color: #d7f5e5; padding: 10px; border-radius: 12px; border: 1px solid #6cf8bb; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #006c49;">TN: 236</span></div>
+            <div style="background-color: #ffdad6; padding: 10px; border-radius: 12px; border: 1px solid #ffb4ab; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #ba1a1a;">FP: 10</span></div>
+            <div style="background-color: #fef3c7; padding: 10px; border-radius: 12px; border: 1px solid #fcd34d; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #b45309;">FN: 33</span></div>
+            <div style="background-color: #1f108e; padding: 10px; border-radius: 12px; border: 1px solid #3730a3; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #ffffff;">TP: 21</span></div>
         </div>
     `;
 }
@@ -1917,15 +1917,15 @@ function renderSvgPerfLearningCurve() {
     const container = document.getElementById('chartPerfLearningCurveContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-between p-2">
-            <div class="flex justify-between text-[10px] font-bold text-on-surface-variant">
-                <span>Training Score: <strong class="text-primary">89.2%</strong></span>
-                <span>Validation Score: <strong class="text-emerald-700">87.1%</strong></span>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-between; padding: 8px;">
+            <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: #464553;">
+                <span>Training Score: <strong style="color: #1f108e;">89.2%</strong></span>
+                <span>Validation Score: <strong style="color: #006c49;">87.1%</strong></span>
             </div>
-            <div class="flex-1 border-b border-l border-surface-variant p-2 h-36 flex items-center justify-center">
-                <svg viewBox="0 0 100 100" class="w-full h-full">
-                    <path d="M 0,20 Q 50,15 100,10" fill="none" stroke="#1f108e" stroke-width="2"/>
-                    <path d="M 0,40 Q 50,22 100,14" fill="none" stroke="#006c49" stroke-dasharray="3" stroke-width="2"/>
+            <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 140px; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 100 100" style="width: 100%; height: 120px;">
+                    <path d="M 0,20 Q 50,15 100,10" fill="none" stroke="#1f108e" stroke-width="2.5"/>
+                    <path d="M 0,40 Q 50,22 100,14" fill="none" stroke="#006c49" stroke-dasharray="3" stroke-width="2.5"/>
                 </svg>
             </div>
         </div>
@@ -1936,13 +1936,13 @@ function renderSvgPerfCvChart() {
     const container = document.getElementById('chartPerfCvContainer');
     if (!container) return;
     container.innerHTML = `
-        <div class="flex flex-col h-full justify-around p-2 text-xs">
-            <div class="flex justify-between font-semibold"><span>Fold 1 Score</span><span class="font-bold text-primary">87.4%</span></div>
-            <div class="flex justify-between font-semibold"><span>Fold 2 Score</span><span class="font-bold text-primary">86.8%</span></div>
-            <div class="flex justify-between font-semibold"><span>Fold 3 Score</span><span class="font-bold text-primary">88.1%</span></div>
-            <div class="flex justify-between font-semibold"><span>Fold 4 Score</span><span class="font-bold text-primary">86.5%</span></div>
-            <div class="flex justify-between font-semibold"><span>Fold 5 Score</span><span class="font-bold text-primary">87.0%</span></div>
-            <div class="pt-1 border-t border-surface-variant flex justify-between font-extrabold text-emerald-700"><span>Mean 5-Fold CV</span><span>87.16% ± 0.58%</span></div>
+        <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-around; padding: 8px; font-size: 11px;">
+            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 1 Score</span><span style="font-weight: 800; color: #1f108e;">87.4%</span></div>
+            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 2 Score</span><span style="font-weight: 800; color: #1f108e;">86.8%</span></div>
+            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 3 Score</span><span style="font-weight: 800; color: #1f108e;">88.1%</span></div>
+            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 4 Score</span><span style="font-weight: 800; color: #1f108e;">86.5%</span></div>
+            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 5 Score</span><span style="font-weight: 800; color: #1f108e;">87.0%</span></div>
+            <div style="padding-top: 4px; border-top: 1px solid #d3e4fe; display: flex; justify-content: space-between; font-weight: 900; color: #006c49;"><span>Mean 5-Fold CV</span><span>87.16% ± 0.58%</span></div>
         </div>
     `;
 }
