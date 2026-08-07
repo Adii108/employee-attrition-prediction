@@ -198,45 +198,47 @@ async function runSinglePrediction() {
     };
 
     try {
-        const resp = await fetch('/predict', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        try {
+            const resp = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
 
-        if (resp.ok) {
-            const data = await resp.json();
-            renderPredictionResult(data);
-            return;
+            if (resp.ok) {
+                const data = await resp.json();
+                renderPredictionResult(data);
+                return;
+            }
+        } catch (err) {
+            console.log("Backend API offline, using embedded standalone inference engine.");
         }
-    } catch (err) {
-        console.log("Backend API offline, using embedded standalone inference engine.");
-    }
 
-    // Client-side inference fallback
-    const fallbackData = calculateLocalJsPrediction(payload);
-    renderPredictionResult(fallbackData);
-} catch (err) {
-    console.error("Prediction request failed:", err);
-    if (resultBox) {
-        resultBox.classList.remove('hidden');
-        resultBox.innerHTML = `
-            <div class="bg-error-container text-on-error-container p-4 rounded-xl flex items-center space-x-3">
-                <span class="material-symbols-outlined">error</span>
-                <div>
-                    <p class="font-bold">Prediction Failed</p>
-                    <p class="text-sm">${err.message || 'Unable to analyze employee profile.'}</p>
+        // Client-side inference fallback
+        const fallbackData = calculateLocalJsPrediction(payload);
+        renderPredictionResult(fallbackData);
+    } catch (err) {
+        console.error("Prediction request failed:", err);
+        if (resultBox) {
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = `
+                <div class="bg-error-container text-on-error-container p-4 rounded-xl flex items-center space-x-3">
+                    <span class="material-symbols-outlined">error</span>
+                    <div>
+                        <p class="font-bold">Prediction Failed</p>
+                        <p class="text-sm">${err.message || 'Unable to analyze employee profile.'}</p>
+                    </div>
                 </div>
-            </div>
-        `;
-    }
-} finally {
-    if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = '<span class="material-symbols-outlined mr-2">analytics</span> Predict Attrition Risk';
+            `;
+        }
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined mr-2">analytics</span> Predict Attrition Risk';
+        }
     }
 }
-}
+
 
 // Client-Side ML Prediction Fallback Engine
 function calculateLocalJsPrediction(p) {
