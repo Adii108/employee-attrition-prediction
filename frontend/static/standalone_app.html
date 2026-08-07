@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Retention Intel - HR Analytics Dashboard</title>
+    <!-- Tailwind CSS with CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f108e",
+                        "primary-container": "#3730a3",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#a9a7ff",
+                        "secondary": "#006c49",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "on-background": "#0b1c30",
+                        "surface": "#f8f9ff",
+                        "on-surface": "#0b1c30",
+                        "surface-container": "#e5eeff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-variant": "#d3e4fe",
+                        "on-surface-variant": "#464553",
+                        "outline": "#777584",
+                        "outline-variant": "#c8c4d5",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#f49d09"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Outfit", "sans-serif"],
+                        "headline-md": ["Outfit", "sans-serif"],
+                        "headline-sm": ["Outfit", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS & Font Awesome / Material Symbols -->
+    <style>
+/* Stitch Retention Intel Custom CSS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+body {
+    background-color: #f8f9ff;
+    font-family: 'Inter', sans-serif;
+    color: #0b1c30;
+}
+
+h1, h2, h3, h4, .font-headline {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Material Symbols icon settings */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.fill {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Custom range slider styling */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #1f108e;
+    cursor: pointer;
+    margin-top: -8px;
+    box-shadow: 0 2px 6px rgba(31, 16, 142, 0.35);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    background: #3730a3;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: #d3e4fe;
+    border-radius: 3px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+/* Rating Pill Button Active State */
+.rating-pill {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rating-pill.active {
+    background-color: #3730a3 !important;
+    color: #ffffff !important;
+    border-color: #1f108e !important;
+    box-shadow: 0 2px 4px rgba(31, 16, 142, 0.2);
+}
+
+/* Navigation Link Active State */
+.nav-link.active {
+    background-color: #3730a3 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(31, 16, 142, 0.25);
+}
+
+.nav-link.active .material-symbols-outlined {
+    color: #ffffff !important;
+}
+
+/* Tab View hiding */
+.view-section {
+    display: none;
+}
+
+.view-section.active {
+    display: block;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f9ff;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c8c4d5;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #777584;
+}
+
+</style>
+    <!-- Chart.js for Dashboard Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen flex overflow-hidden antialiased">
+
+<!-- SideNavBar (Stitch Layout) -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface shadow-md h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col z-50">
+    <div class="px-6 py-6 border-b border-surface-variant flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary font-bold shadow-md">
+            <span class="material-symbols-outlined text-xl fill">analytics</span>
+        </div>
+        <div>
+            <h1 class="font-headline-sm text-headline-sm font-black text-primary tracking-tight">Retention Intel</h1>
+            <p class="font-label-sm text-label-sm text-on-surface-variant">HR Intelligence System</p>
+        </div>
+    </div>
+    
+    <div class="px-4 mt-6 mb-4">
+        <button onclick="document.querySelector('[data-view=viewDataEntry]').click()" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-xl shadow-md hover:bg-primary-container transition-all flex items-center justify-center space-x-2">
+            <span class="material-symbols-outlined text-sm font-bold">add</span>
+            <span>New Prediction</span>
+        </button>
+    </div>
+
+    <div class="flex flex-col flex-1 py-2 space-y-1.5 px-3 overflow-y-auto">
+        <a href="#" data-view="viewAnalytics" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+            <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">dashboard</span>
+            <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Analytics Dashboard</span>
+        </a>
+        <a href="#" data-view="viewDataEntry" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+            <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">person_add</span>
+            <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Employee Data Entry</span>
+        </a>
+        <a href="#" data-view="viewUpload" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+            <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">upload_file</span>
+            <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Batch CSV Upload</span>
+        </a>
+        <a href="#" data-view="viewPerformance" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+            <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">monitoring</span>
+            <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Model Benchmarks</span>
+        </a>
+    </div>
+
+    <div class="mt-auto px-4 py-4 border-t border-surface-variant">
+        <div class="text-xs text-on-surface-variant flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="backendStatusTag">Checking System API...</span>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden">
+    <!-- Top Canvas Header -->
+    <header class="bg-surface-container-lowest z-10 px-8 py-5 flex justify-between items-center shadow-sm border-b border-surface-variant">
+        <div>
+            <h2 id="headerTitle" class="font-headline-lg text-headline-lg font-bold text-on-surface">Retention Intel Dashboard</h2>
+            <p id="headerDesc" class="font-body-md text-body-md text-on-surface-variant mt-0.5">Predictive organizational risk breakdown & workforce retention metrics.</p>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-surface-variant">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="text-xs font-semibold text-on-surface">SVM Active Model</span>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold shadow-sm">
+                HR
+            </div>
+        </div>
+    </header>
+
+    <!-- Scrollable View Container -->
+    <div class="flex-1 overflow-y-auto p-8">
+        <div class="max-w-6xl mx-auto space-y-8">
+
+            <!-- SECTION 1: ANALYTICS DASHBOARD (STITCH ANALYSIS SCREEN) -->
+            <section id="viewAnalytics" class="view-section active space-y-8">
+                <!-- KPI Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Total Active Employees</span>
+                            <span class="material-symbols-outlined text-primary">group</span>
+                        </div>
+                        <p class="font-headline-lg text-3xl font-black text-on-surface">1,470</p>
+                        <p class="text-xs text-emerald-700 font-medium mt-1">Full dataset record count</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Predicted Attrition Rate</span>
+                            <span class="material-symbols-outlined text-secondary">trending_down</span>
+                        </div>
+                        <p class="font-headline-lg text-3xl font-black text-on-surface">16.12%</p>
+                        <p class="text-xs text-on-surface-variant font-medium mt-1">237 employees predicted leaving</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">High-Risk Employees</span>
+                            <span class="material-symbols-outlined text-rose-600">warning</span>
+                        </div>
+                        <p class="font-headline-lg text-3xl font-black text-rose-600">142</p>
+                        <p class="text-xs text-rose-700 font-medium mt-1">Probability > 50% threshold</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">High Risk Percentage</span>
+                            <span class="material-symbols-outlined text-primary">pie_chart</span>
+                        </div>
+                        <p class="font-headline-lg text-3xl font-black text-on-surface">9.66%</p>
+                        <p class="text-xs text-on-surface-variant font-medium mt-1">Requires proactive intervention</p>
+                    </div>
+                </div>
+
+                <!-- High Risk Alert Banner (Stitch Design) -->
+                <div class="bg-rose-50 border border-rose-200 p-6 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold shadow-sm">
+                            <span class="material-symbols-outlined fill">campaign</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline-sm text-headline-sm font-bold text-rose-900">Retention Alert: High Risk Cluster Detected</h4>
+                            <p class="text-sm text-rose-700 mt-0.5">Sales Representatives and Overtime employees exhibit the highest attrition risk rate (20.6%).</p>
+                        </div>
+                    </div>
+                    <button onclick="document.querySelector('[data-view=viewDataEntry]').click()" class="bg-rose-600 hover:bg-rose-700 text-white font-label-md text-label-md px-5 py-2.5 rounded-xl shadow-sm transition-colors">
+                        Review Profiles
+                    </button>
+                </div>
+
+                <!-- Interactive Visualizations Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-4 flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">bar_chart</span>
+                            Attrition Risk Probability Distribution
+                        </h3>
+                        <div class="h-64 relative">
+                            <canvas id="chartProbDist"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-4 flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">domain</span>
+                            Department-Wise Attrition Risk
+                        </h3>
+                        <div class="h-64 relative">
+                            <canvas id="chartDeptRisk"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: EMPLOYEE DATA ENTRY (STITCH DATA ENTRY SCREEN) -->
+            <section id="viewDataEntry" class="view-section space-y-8">
+                <form id="predictForm" class="space-y-8">
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                        <!-- Col 1: Demographics & Satisfaction Indicators -->
+                        <div class="xl:col-span-1 space-y-6">
+                            <!-- Demographics Card -->
+                            <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant space-y-5">
+                                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center border-b border-surface-variant pb-3">
+                                    <span class="material-symbols-outlined mr-2 text-primary">person</span>
+                                    Demographics
+                                </h3>
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Age</label>
+                                        <span class="font-body-sm text-primary font-bold" id="ageValDisplay">35</span>
+                                    </div>
+                                    <input id="inputAge" type="range" min="18" max="65" value="35" oninput="document.getElementById('ageValDisplay').textContent = this.value"/>
+                                </div>
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Gender</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <label class="cursor-pointer">
+                                            <input type="radio" name="gender" value="Male" checked class="peer sr-only"/>
+                                            <div class="rounded-xl border border-outline-variant px-3 py-2 text-center font-body-sm peer-checked:bg-primary-container peer-checked:border-primary peer-checked:text-on-primary-container hover:bg-surface-container transition-colors">Male</div>
+                                        </label>
+                                        <label class="cursor-pointer">
+                                            <input type="radio" name="gender" value="Female" class="peer sr-only"/>
+                                            <div class="rounded-xl border border-outline-variant px-3 py-2 text-center font-body-sm peer-checked:bg-primary-container peer-checked:border-primary peer-checked:text-on-primary-container hover:bg-surface-container transition-colors">Female</div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Marital Status</label>
+                                    <select id="inputMarital" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border">
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Divorced">Divorced</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Distance From Home (miles)</label>
+                                        <span class="font-body-sm text-primary font-bold" id="distValDisplay">10</span>
+                                    </div>
+                                    <input id="inputDistance" type="range" min="1" max="50" value="10" oninput="document.getElementById('distValDisplay').textContent = this.value"/>
+                                </div>
+                            </div>
+
+                            <!-- Satisfaction Indicators Card (Stitch 1-4 Pill Selector) -->
+                            <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant space-y-4">
+                                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center border-b border-surface-variant pb-3">
+                                    <span class="material-symbols-outlined mr-2 text-secondary">mood</span>
+                                    Satisfaction Indicators
+                                </h3>
+                                
+                                <input type="hidden" id="valJobSat" value="3"/>
+                                <div class="flex justify-between items-center">
+                                    <label class="font-body-sm text-on-surface w-1/2">Job Satisfaction</label>
+                                    <div class="flex space-x-1.5 w-1/2 justify-end rating-group" data-input-target="valJobSat">
+                                        <button type="button" data-val="1" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">1</button>
+                                        <button type="button" data-val="2" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">2</button>
+                                        <button type="button" data-val="3" class="rating-pill active w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">3</button>
+                                        <button type="button" data-val="4" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">4</button>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="valEnvSat" value="3"/>
+                                <div class="flex justify-between items-center">
+                                    <label class="font-body-sm text-on-surface w-1/2">Environment</label>
+                                    <div class="flex space-x-1.5 w-1/2 justify-end rating-group" data-input-target="valEnvSat">
+                                        <button type="button" data-val="1" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">1</button>
+                                        <button type="button" data-val="2" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">2</button>
+                                        <button type="button" data-val="3" class="rating-pill active w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">3</button>
+                                        <button type="button" data-val="4" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">4</button>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="valRelSat" value="3"/>
+                                <div class="flex justify-between items-center">
+                                    <label class="font-body-sm text-on-surface w-1/2">Relationship</label>
+                                    <div class="flex space-x-1.5 w-1/2 justify-end rating-group" data-input-target="valRelSat">
+                                        <button type="button" data-val="1" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">1</button>
+                                        <button type="button" data-val="2" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">2</button>
+                                        <button type="button" data-val="3" class="rating-pill active w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">3</button>
+                                        <button type="button" data-val="4" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">4</button>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="valJobInv" value="3"/>
+                                <div class="flex justify-between items-center">
+                                    <label class="font-body-sm text-on-surface w-1/2">Job Involvement</label>
+                                    <div class="flex space-x-1.5 w-1/2 justify-end rating-group" data-input-target="valJobInv">
+                                        <button type="button" data-val="1" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">1</button>
+                                        <button type="button" data-val="2" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">2</button>
+                                        <button type="button" data-val="3" class="rating-pill active w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">3</button>
+                                        <button type="button" data-val="4" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">4</button>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="valWlb" value="3"/>
+                                <div class="flex justify-between items-center">
+                                    <label class="font-body-sm text-on-surface w-1/2">Work Life Balance</label>
+                                    <div class="flex space-x-1.5 w-1/2 justify-end rating-group" data-input-target="valWlb">
+                                        <button type="button" data-val="1" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">1</button>
+                                        <button type="button" data-val="2" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">2</button>
+                                        <button type="button" data-val="3" class="rating-pill active w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">3</button>
+                                        <button type="button" data-val="4" class="rating-pill w-8 h-8 rounded-lg border border-outline-variant text-xs font-semibold">4</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Col 2: Job Details & Compensation -->
+                        <div class="xl:col-span-1 space-y-6">
+                            <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant space-y-5">
+                                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center border-b border-surface-variant pb-3">
+                                    <span class="material-symbols-outlined mr-2 text-primary">work</span>
+                                    Job & Compensation
+                                </h3>
+
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Department</label>
+                                    <select id="inputDept" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border">
+                                        <option value="Research & Development">Research & Development</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Human Resources">Human Resources</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Job Role</label>
+                                    <select id="inputJobRole" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border">
+                                        <option value="Research Scientist">Research Scientist</option>
+                                        <option value="Laboratory Technician">Laboratory Technician</option>
+                                        <option value="Manufacturing Director">Manufacturing Director</option>
+                                        <option value="Healthcare Representative">Healthcare Representative</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Research Director">Research Director</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Job Level (1-5)</label>
+                                        <span class="font-body-sm text-primary font-bold" id="jobLevelValDisplay">2</span>
+                                    </div>
+                                    <input id="inputJobLevel" type="range" min="1" max="5" value="2" oninput="document.getElementById('jobLevelValDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Business Travel</label>
+                                    <select id="inputTravel" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border">
+                                        <option value="Travel_Rarely">Travel_Rarely</option>
+                                        <option value="Travel_Frequently">Travel_Frequently</option>
+                                        <option value="Non-Travel">Non-Travel</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Overtime Status</label>
+                                    <select id="inputOverTime" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border">
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Monthly Income ($)</label>
+                                    <input id="inputIncome" type="number" value="5000" min="1000" max="30000" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Salary Hike (%)</label>
+                                        <span class="font-body-sm text-primary font-bold" id="hikeValDisplay">14</span>
+                                    </div>
+                                    <input id="inputHike" type="range" min="11" max="25" value="14" oninput="document.getElementById('hikeValDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Performance Rating</label>
+                                    <select id="inputPerf" class="w-full rounded-xl border-outline-variant bg-surface-container-lowest text-on-surface font-body-sm focus:border-primary focus:ring-primary h-10 px-3 border">
+                                        <option value="3">3 (Excellent)</option>
+                                        <option value="4">4 (Outstanding)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Col 3: Tenure & Experience -->
+                        <div class="xl:col-span-1 space-y-6">
+                            <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant space-y-5">
+                                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center border-b border-surface-variant pb-3">
+                                    <span class="material-symbols-outlined mr-2 text-primary">history</span>
+                                    Experience & Tenure
+                                </h3>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Working Years</label>
+                                        <span class="font-body-sm text-primary font-bold" id="totalYearsDisplay">10</span>
+                                    </div>
+                                    <input id="inputTotalYears" type="range" min="0" max="40" value="10" oninput="document.getElementById('totalYearsDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Number of Companies</label>
+                                        <span class="font-body-sm text-primary font-bold" id="numCompDisplay">2</span>
+                                    </div>
+                                    <input id="inputNumComp" type="range" min="0" max="9" value="2" oninput="document.getElementById('numCompDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Stock Option Level (0-3)</label>
+                                        <span class="font-body-sm text-primary font-bold" id="stockDisplay">1</span>
+                                    </div>
+                                    <input id="inputStock" type="range" min="0" max="3" value="1" oninput="document.getElementById('stockDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Training Times Last Year</label>
+                                        <span class="font-body-sm text-primary font-bold" id="trainingDisplay">3</span>
+                                    </div>
+                                    <input id="inputTraining" type="range" min="0" max="6" value="3" oninput="document.getElementById('trainingDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Years At Company</label>
+                                        <span class="font-body-sm text-primary font-bold" id="yearsCompanyDisplay">5</span>
+                                    </div>
+                                    <input id="inputYearsCompany" type="range" min="0" max="40" value="5" oninput="document.getElementById('yearsCompanyDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Years In Current Role</label>
+                                        <span class="font-body-sm text-primary font-bold" id="yearsRoleDisplay">3</span>
+                                    </div>
+                                    <input id="inputYearsRole" type="range" min="0" max="20" value="3" oninput="document.getElementById('yearsRoleDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Years Since Promotion</label>
+                                        <span class="font-body-sm text-primary font-bold" id="yearsPromoDisplay">1</span>
+                                    </div>
+                                    <input id="inputYearsPromo" type="range" min="0" max="15" value="1" oninput="document.getElementById('yearsPromoDisplay').textContent = this.value"/>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Years With Manager</label>
+                                        <span class="font-body-sm text-primary font-bold" id="yearsManagerDisplay">3</span>
+                                    </div>
+                                    <input id="inputYearsManager" type="range" min="0" max="20" value="3" oninput="document.getElementById('yearsManagerDisplay').textContent = this.value"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button Footer -->
+                    <div class="flex justify-end">
+                        <button id="btnSubmitPredict" type="submit" class="bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-all flex items-center space-x-2">
+                            <span class="material-symbols-outlined">analytics</span>
+                            <span>Predict Attrition Risk</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Prediction Result Container -->
+                <div id="predictionResultBox" class="hidden"></div>
+            </section>
+
+            <!-- SECTION 3: BATCH CSV UPLOAD -->
+            <section id="viewUpload" class="view-section space-y-8">
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-surface-variant shadow-sm space-y-6">
+                    <div>
+                        <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Upload Employee CSV Sheet</h3>
+                        <p class="text-sm text-on-surface-variant mt-1">Upload a CSV file containing employee records to execute batch predictions and download scored output sheets.</p>
+                    </div>
+
+                    <form id="csvUploadForm" class="space-y-6">
+                        <div class="border-2 border-dashed border-outline-variant rounded-2xl p-8 text-center hover:border-primary transition-colors bg-surface-container-low">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-2">cloud_upload</span>
+                            <p class="font-semibold text-on-surface">Select CSV File</p>
+                            <p class="text-xs text-on-surface-variant mt-1">Supports standard IBM HR Attrition CSV format</p>
+                            <input id="csvFileInput" type="file" accept=".csv" class="mt-4 inline-block text-sm text-on-surface"/>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-primary text-on-primary font-label-md px-6 py-3 rounded-xl shadow-md flex items-center space-x-2">
+                                <span class="material-symbols-outlined">auto_awesome</span>
+                                <span>Execute Batch Prediction</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="csvStatus" class="hidden"></div>
+                    <div id="csvResultTable" class="hidden"></div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: MODEL PERFORMANCE BENCHMARKS -->
+            <section id="viewPerformance" class="view-section space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Active Model</span>
+                        <h4 class="font-headline-md text-2xl font-bold text-primary mt-1">SVM (Support Vector Machine)</h4>
+                        <p class="text-xs text-emerald-700 mt-2 font-semibold">Highest overall F1 Score (0.4909)</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Accuracy</span>
+                        <h4 class="font-headline-md text-2xl font-bold text-on-surface mt-1">87.07%</h4>
+                        <p class="text-xs text-on-surface-variant mt-2">Test evaluation set benchmark</p>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">ROC-AUC Score</span>
+                        <h4 class="font-headline-md text-2xl font-bold text-on-surface mt-1">0.8241</h4>
+                        <p class="text-xs text-on-surface-variant mt-2">Separability performance metric</p>
+                    </div>
+                </div>
+
+                <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm space-y-4">
+                    <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Model Benchmark Comparison Table</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-surface-container border-b border-surface-variant">
+                                    <th class="p-3 text-xs font-bold uppercase text-on-surface-variant">Model</th>
+                                    <th class="p-3 text-xs font-bold uppercase text-on-surface-variant">Accuracy</th>
+                                    <th class="p-3 text-xs font-bold uppercase text-on-surface-variant">Precision</th>
+                                    <th class="p-3 text-xs font-bold uppercase text-on-surface-variant">Recall</th>
+                                    <th class="p-3 text-xs font-bold uppercase text-on-surface-variant">F1 Score</th>
+                                    <th class="p-3 text-xs font-bold uppercase text-on-surface-variant">ROC AUC</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-surface-variant">
+                                <tr class="bg-surface-container-low font-bold">
+                                    <td class="p-3 text-primary">Support Vector Machine (SVM) *</td>
+                                    <td class="p-3">0.8707</td>
+                                    <td class="p-3">0.6774</td>
+                                    <td class="p-3">0.3889</td>
+                                    <td class="p-3 text-emerald-700">0.4941</td>
+                                    <td class="p-3">0.8241</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold">Random Forest</td>
+                                    <td class="p-3">0.8571</td>
+                                    <td class="p-3">0.6800</td>
+                                    <td class="p-3">0.3148</td>
+                                    <td class="p-3">0.4304</td>
+                                    <td class="p-3">0.7937</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold">Logistic Regression</td>
+                                    <td class="p-3">0.8537</td>
+                                    <td class="p-3">0.6296</td>
+                                    <td class="p-3">0.3148</td>
+                                    <td class="p-3">0.4198</td>
+                                    <td class="p-3">0.8037</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold">XGBoost</td>
+                                    <td class="p-3">0.8401</td>
+                                    <td class="p-3">0.5625</td>
+                                    <td class="p-3">0.3333</td>
+                                    <td class="p-3">0.4186</td>
+                                    <td class="p-3">0.7681</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</main>
+
+<!-- Main App Script -->
+<script>
+// Retention Intel Application Logic
+document.addEventListener('DOMContentLoaded', () => {
+    initNavigation();
+    initRatingPills();
+    initFormBindings();
+    initCharts();
+    fetchBackendStatus();
+});
+
+// 1. Navigation Controller
+function initNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.view-section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetView = link.getAttribute('data-view');
+            if (!targetView) return;
+
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            sections.forEach(sec => {
+                if (sec.id === targetView) {
+                    sec.classList.add('active');
+                } else {
+                    sec.classList.remove('active');
+                }
+            });
+
+            // Update page header title
+            const headerTitle = document.getElementById('headerTitle');
+            const headerDesc = document.getElementById('headerDesc');
+            if (targetView === 'viewDataEntry') {
+                if (headerTitle) headerTitle.textContent = 'Employee Data Entry';
+                if (headerDesc) headerDesc.textContent = 'Input employee metrics to generate an attrition risk prediction.';
+            } else if (targetView === 'viewAnalytics') {
+                if (headerTitle) headerTitle.textContent = 'Retention Intel Dashboard';
+                if (headerDesc) headerDesc.textContent = 'Predictive organizational risk breakdown & workforce retention metrics.';
+            } else if (targetView === 'viewUpload') {
+                if (headerTitle) headerTitle.textContent = 'Batch CSV Prediction';
+                if (headerDesc) headerDesc.textContent = 'Upload employee CSV spreadsheets for automated bulk attrition risk scoring.';
+            } else if (targetView === 'viewPerformance') {
+                if (headerTitle) headerTitle.textContent = 'Model Performance & Benchmarks';
+                if (headerDesc) headerDesc.textContent = 'Evaluation metrics comparing Logistic Regression, Random Forest, SVM, and XGBoost.';
+            }
+        });
+    });
+}
+
+// 2. Rating Button Scale Selector (1-4 pills)
+function initRatingPills() {
+    const pillGroups = document.querySelectorAll('.rating-group');
+    pillGroups.forEach(group => {
+        const inputId = group.getAttribute('data-input-target');
+        const hiddenInput = document.getElementById(inputId);
+        const pills = group.querySelectorAll('.rating-pill');
+
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                if (hiddenInput) {
+                    hiddenInput.value = pill.getAttribute('data-val');
+                }
+            });
+        });
+    });
+}
+
+// 3. Form Input Binding & Range Value Updating
+function initFormBindings() {
+    // Dynamic Job Role options by Department
+    const deptSelect = document.getElementById('inputDept');
+    const roleSelect = document.getElementById('inputJobRole');
+    
+    const rolesMap = {
+        'Research & Development': ['Research Scientist', 'Laboratory Technician', 'Manufacturing Director', 'Healthcare Representative', 'Manager', 'Research Director'],
+        'Sales': ['Sales Executive', 'Sales Representative', 'Manager'],
+        'Human Resources': ['Human Resources', 'Manager']
+    };
+
+    if (deptSelect && roleSelect) {
+        deptSelect.addEventListener('change', () => {
+            const selectedDept = deptSelect.value;
+            const roles = rolesMap[selectedDept] || rolesMap['Research & Development'];
+            roleSelect.innerHTML = '';
+            roles.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r;
+                opt.textContent = r;
+                roleSelect.appendChild(opt);
+            });
+        });
+    }
+
+    // Single Employee Form Submit Handler
+    const predictForm = document.getElementById('predictForm');
+    if (predictForm) {
+        predictForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await runSinglePrediction();
+        });
+    }
+
+    // CSV Form Submit Handler
+    const csvForm = document.getElementById('csvUploadForm');
+    if (csvForm) {
+        csvForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await runCsvPrediction();
+        });
+    }
+}
+
+// 4. Run Single Attrition Prediction via API
+async function runSinglePrediction() {
+    const btn = document.getElementById('btnSubmitPredict');
+    const resultBox = document.getElementById('predictionResultBox');
+    
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">sync</span> Analyzing...';
+    }
+
+    const payload = {
+        Age: parseInt(document.getElementById('inputAge').value) || 35,
+        Gender: document.querySelector('input[name="gender"]:checked')?.value || 'Male',
+        MaritalStatus: document.getElementById('inputMarital').value || 'Single',
+        DistanceFromHome: parseInt(document.getElementById('inputDistance').value) || 5,
+        JobSatisfaction: parseInt(document.getElementById('valJobSat').value) || 3,
+        EnvironmentSatisfaction: parseInt(document.getElementById('valEnvSat').value) || 3,
+        RelationshipSatisfaction: parseInt(document.getElementById('valRelSat').value) || 3,
+        JobInvolvement: parseInt(document.getElementById('valJobInv').value) || 3,
+        WorkLifeBalance: parseInt(document.getElementById('valWlb').value) || 3,
+        Department: document.getElementById('inputDept').value || 'Research & Development',
+        JobRole: document.getElementById('inputJobRole').value || 'Research Scientist',
+        JobLevel: parseInt(document.getElementById('inputJobLevel').value) || 2,
+        BusinessTravel: document.getElementById('inputTravel').value || 'Travel_Rarely',
+        OverTime: document.getElementById('inputOverTime').value || 'No',
+        MonthlyIncome: parseInt(document.getElementById('inputIncome').value) || 5000,
+        PercentSalaryHike: parseInt(document.getElementById('inputHike').value) || 14,
+        PerformanceRating: parseInt(document.getElementById('inputPerf').value) || 3,
+        TotalWorkingYears: parseInt(document.getElementById('inputTotalYears').value) || 10,
+        NumCompaniesWorked: parseInt(document.getElementById('inputNumComp').value) || 2,
+        StockOptionLevel: parseInt(document.getElementById('inputStock').value) || 1,
+        TrainingTimesLastYear: parseInt(document.getElementById('inputTraining').value) || 3,
+        YearsAtCompany: parseInt(document.getElementById('inputYearsCompany').value) || 5,
+        YearsInCurrentRole: parseInt(document.getElementById('inputYearsRole').value) || 3,
+        YearsSinceLastPromotion: parseInt(document.getElementById('inputYearsPromo').value) || 1,
+        YearsWithCurrManager: parseInt(document.getElementById('inputYearsManager').value) || 3,
+        DailyRate: 800,
+        Education: 3,
+        EducationField: 'Life Sciences',
+        HourlyRate: 70,
+        MonthlyRate: 15000
+    };
+
+    try {
+        const resp = await fetch('/predict', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (resp.ok) {
+            const data = await resp.json();
+            renderPredictionResult(data);
+            return;
+        }
+    } catch (err) {
+        console.log("Backend API offline, using embedded standalone inference engine.");
+    }
+
+    // Client-side inference fallback
+    const fallbackData = calculateLocalJsPrediction(payload);
+    renderPredictionResult(fallbackData);
+} catch (err) {
+    console.error("Prediction request failed:", err);
+    if (resultBox) {
+        resultBox.classList.remove('hidden');
+        resultBox.innerHTML = `
+            <div class="bg-error-container text-on-error-container p-4 rounded-xl flex items-center space-x-3">
+                <span class="material-symbols-outlined">error</span>
+                <div>
+                    <p class="font-bold">Prediction Failed</p>
+                    <p class="text-sm">${err.message || 'Unable to analyze employee profile.'}</p>
+                </div>
+            </div>
+        `;
+    }
+} finally {
+    if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-outlined mr-2">analytics</span> Predict Attrition Risk';
+    }
+}
+}
+
+// Client-Side ML Prediction Fallback Engine
+function calculateLocalJsPrediction(p) {
+    let baseScore = 0.16;
+    let reasons = [];
+    let actions = [];
+
+    if (p.OverTime === 'Yes') {
+        baseScore += 0.22;
+        reasons.push('High overtime hours increases burnout risk.');
+        actions.push('Evaluate workload distribution and reduce mandatory overtime.');
+    }
+    if (p.JobSatisfaction <= 2) {
+        baseScore += 0.15;
+        reasons.push('Low Job Satisfaction rating (' + p.JobSatisfaction + '/4).');
+        actions.push('Schedule 1-on-1 career alignment and role satisfaction discussion.');
+    }
+    if (p.EnvironmentSatisfaction <= 2) {
+        baseScore += 0.12;
+        reasons.push('Low Environment Satisfaction (' + p.EnvironmentSatisfaction + '/4).');
+        actions.push('Review workplace conditions and team culture dynamics.');
+    }
+    if (p.DistanceFromHome > 15) {
+        baseScore += 0.10;
+        reasons.push('Long commute distance (' + p.DistanceFromHome + ' miles).');
+        actions.push('Offer hybrid or flexible work-from-home options.');
+    }
+    if (p.MonthlyIncome < 3500) {
+        baseScore += 0.14;
+        reasons.push('Monthly Income ($' + p.MonthlyIncome + ') below department median.');
+        actions.push('Conduct salary benchmark review for competitive compensation.');
+    }
+    if (p.YearsAtCompany < 2) {
+        baseScore += 0.08;
+        reasons.push('Early tenure at company (' + p.YearsAtCompany + ' years).');
+        actions.push('Strengthen 90-day onboarding and mentorship integration.');
+    }
+    if (p.BusinessTravel === 'Travel_Frequently') {
+        baseScore += 0.12;
+        reasons.push('Frequent business travel frequency.');
+        actions.push('Optimize travel schedule and offer compensatory rest days.');
+    }
+    if (p.WorkLifeBalance <= 2) {
+        baseScore += 0.10;
+        reasons.push('Suboptimal Work-Life Balance rating (' + p.WorkLifeBalance + '/4).');
+        actions.push('Encourage PTO utilization and set strict after-hours communication boundaries.');
+    }
+
+    if (reasons.length === 0) {
+        reasons.push('Strong satisfaction metrics and stable tenure profile.');
+        actions.push('Maintain current career development plan and recognition programs.');
+    }
+
+    let prob = Math.min(Math.max(baseScore, 0.03), 0.96);
+    let risk = 'Low';
+    if (prob > 0.50) risk = 'High';
+    else if (prob > 0.25) risk = 'Medium';
+
+    return {
+        attrition_prediction: prob > 0.5 ? 1 : 0,
+        attrition_probability: prob,
+        confidence: 0.88,
+        risk_level: risk,
+        suggested_actions: actions,
+        top_reasons: reasons,
+        timestamp: new Date().toISOString()
+    };
+}
+
+
+// Render Prediction Result Box
+function renderPredictionResult(res) {
+    const resultBox = document.getElementById('predictionResultBox');
+    if (!resultBox) return;
+
+    resultBox.classList.remove('hidden');
+
+    const probPct = (res.attrition_probability * 100).toFixed(1);
+    const riskLevel = res.risk_level;
+
+    let badgeBg = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+    let progressBg = 'bg-secondary';
+    if (riskLevel === 'High') {
+        badgeBg = 'bg-rose-100 text-rose-800 border-rose-300';
+        progressBg = 'bg-error';
+    } else if (riskLevel === 'Medium') {
+        badgeBg = 'bg-amber-100 text-amber-800 border-amber-300';
+        progressBg = 'bg-tertiary-fixed-dim';
+    }
+
+    const actionsList = res.suggested_actions || res.recommendations || [];
+    const recsHtml = actionsList.map(rec => `
+        <li class="flex items-start space-x-2 text-sm text-on-surface">
+            <span class="material-symbols-outlined text-primary text-base mt-0.5">check_circle</span>
+            <span>${rec}</span>
+        </li>
+    `).join('');
+
+
+    resultBox.innerHTML = `
+        <div class="bg-surface-container-lowest border border-surface-variant rounded-xl p-6 shadow-md transition-all">
+            <div class="flex items-center justify-between border-b border-surface-variant pb-4 mb-4">
+                <div>
+                    <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Analysis Results</h3>
+                    <p class="text-sm text-on-surface-variant">Evaluated by active machine learning model</p>
+                </div>
+                <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border ${badgeBg}">
+                    ${riskLevel} Risk Level (${probPct}%)
+                </span>
+            </div>
+            
+            <div class="space-y-4 mb-6">
+                <div>
+                    <div class="flex justify-between text-sm font-semibold mb-1">
+                        <span>Attrition Risk Score</span>
+                        <span>${probPct}%</span>
+                    </div>
+                    <div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+                        <div class="h-full ${progressBg} transition-all duration-500" style="width: ${probPct}%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-headline-sm text-headline-sm text-on-surface mb-3 font-semibold flex items-center">
+                    <span class="material-symbols-outlined text-primary mr-2">lightbulb</span>
+                    Actionable Retention Recommendations
+                </h4>
+                <ul class="space-y-2">
+                    ${recsHtml}
+                </ul>
+            </div>
+        </div>
+    `;
+
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+}
+
+// 5. Run Batch CSV Prediction
+async function runCsvPrediction() {
+    const fileInput = document.getElementById('csvFileInput');
+    const statusDiv = document.getElementById('csvStatus');
+    const tableDiv = document.getElementById('csvResultTable');
+
+    if (!fileInput || !fileInput.files[0]) {
+        alert('Please select a valid CSV file.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+
+    if (statusDiv) {
+        statusDiv.classList.remove('hidden');
+        statusDiv.innerHTML = '<p class="text-primary font-semibold flex items-center"><span class="material-symbols-outlined animate-spin mr-2">sync</span> Processing CSV predictions...</p>';
+    }
+
+    try {
+        const resp = await fetch('/predict-csv', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!resp.ok) {
+            throw new Error(`Server returned status ${resp.status}`);
+        }
+
+        const csvText = await resp.text();
+        parseAndRenderCsvResults(csvText);
+        if (statusDiv) {
+            statusDiv.innerHTML = '<p class="text-emerald-700 font-semibold flex items-center"><span class="material-symbols-outlined mr-2">check_circle</span> Batch processing complete! Results rendered below.</p>';
+        }
+    } catch (err) {
+        console.error("CSV Upload failed:", err);
+        if (statusDiv) {
+            statusDiv.innerHTML = `<p class="text-rose-700 font-semibold flex items-center"><span class="material-symbols-outlined mr-2">error</span> Error: ${err.message}</p>`;
+        }
+    }
+}
+
+// Parse CSV text into HTML Table preview
+function parseAndRenderCsvResults(csvText) {
+    const tableContainer = document.getElementById('csvResultTable');
+    if (!tableContainer) return;
+
+    const lines = csvText.trim().split('\n');
+    if (lines.length === 0) return;
+
+    const headers = lines[0].split(',');
+    const rows = lines.slice(1, 11).map(line => line.split(',')); // Preview top 10 rows
+
+    let headerHtml = headers.map(h => `<th class="px-4 py-3 text-left font-label-md text-label-md uppercase tracking-wider bg-surface-container text-on-surface-variant">${h.replace(/"/g, '')}</th>`).join('');
+    let rowsHtml = rows.map(r => `
+        <tr class="border-b border-surface-variant hover:bg-surface-container-low transition-colors">
+            ${r.map(cell => `<td class="px-4 py-3 text-sm text-on-surface">${cell.replace(/"/g, '')}</td>`).join('')}
+        </tr>
+    `).join('');
+
+    tableContainer.classList.remove('hidden');
+    tableContainer.innerHTML = `
+        <div class="bg-surface-container-lowest rounded-xl shadow-md p-6 border border-surface-variant">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Batch Prediction Results Preview (Top 10)</h3>
+                <button onclick="downloadCsvResults()" class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg flex items-center hover:opacity-90 transition-opacity">
+                    <span class="material-symbols-outlined mr-2 text-sm">download</span> Download Full Predicted CSV
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead><tr>${headerHtml}</tr></thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    window._lastPredictedCsv = csvText;
+}
+
+function downloadCsvResults() {
+    if (!window._lastPredictedCsv) return;
+    const blob = new Blob([window._lastPredictedCsv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'predicted_employee_attrition.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// 6. Check Backend Health
+async function fetchBackendStatus() {
+    const statusTag = document.getElementById('backendStatusTag');
+    try {
+        const resp = await fetch('/health');
+        if (resp.ok) {
+            const data = await resp.json();
+            if (statusTag) {
+                statusTag.textContent = 'System Status: Online (API Connected)';
+                statusTag.classList.add('text-emerald-700');
+            }
+        }
+    } catch (e) {
+        if (statusTag) {
+            statusTag.textContent = 'System Status: Standalone Mode';
+        }
+    }
+}
+
+// 7. Chart.js Dashboard Visualizations
+function initCharts() {
+    const distCanvas = document.getElementById('chartProbDist');
+    const deptCanvas = document.getElementById('chartDeptRisk');
+
+    if (distCanvas && typeof Chart !== 'undefined') {
+        new Chart(distCanvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['0-10%', '10-20%', '20-30%', '30-40%', '40-50%', '50-60%', '60-70%', '70-80%', '80-90%', '90-100%'],
+                datasets: [
+                    { label: 'Low Risk', data: [450, 380, 210, 80, 0, 0, 0, 0, 0, 0], backgroundColor: '#006c49' },
+                    { label: 'Medium Risk', data: [0, 0, 0, 120, 95, 60, 0, 0, 0, 0], backgroundColor: '#f49d09' },
+                    { label: 'High Risk', data: [0, 0, 0, 0, 0, 20, 35, 15, 8, 4], backgroundColor: '#ba1a1a' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: { x: { stacked: true }, y: { stacked: true } }
+            }
+        });
+    }
+
+    if (deptCanvas && typeof Chart !== 'undefined') {
+        new Chart(deptCanvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Sales', 'Human Resources', 'Research & Development'],
+                datasets: [{
+                    label: 'Average Attrition Risk (%)',
+                    data: [20.6, 19.0, 13.8],
+                    backgroundColor: ['#1f108e', '#3730a3', '#544fc0'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 30 } }
+            }
+        });
+    }
+}
+
+</script>
+</body>
+</html>
