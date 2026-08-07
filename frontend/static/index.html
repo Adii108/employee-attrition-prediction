@@ -706,9 +706,21 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
                         <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
-                            <span class="material-symbols-outlined text-primary mr-2">table_chart</span> Confusion Matrix
+                            <span class="material-symbols-outlined text-primary mr-2">grid_on</span> Confusion Matrix
                         </h3>
                         <div class="h-52 relative" id="chartPerfConfusionMatrixContainer"></div>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
+                            <span class="material-symbols-outlined text-primary mr-2">show_chart</span> ROC Curve (AUC: 0.8241)
+                        </h3>
+                        <div class="h-52 relative" id="chartPerfRocCurveContainer"></div>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
+                            <span class="material-symbols-outlined text-primary mr-2">query_stats</span> Precision-Recall Curve
+                        </h3>
+                        <div class="h-52 relative" id="chartPerfPrCurveContainer"></div>
                     </div>
                     <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
                         <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
@@ -718,9 +730,21 @@
                     </div>
                     <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
                         <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
-                            <span class="material-symbols-outlined text-primary mr-2">published_with_changes</span> Cross Validation
+                            <span class="material-symbols-outlined text-primary mr-2">published_with_changes</span> 5-Fold Cross Validation
                         </h3>
                         <div class="h-52 relative" id="chartPerfCvContainer"></div>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
+                            <span class="material-symbols-outlined text-primary mr-2">leaderboard</span> Feature Importance
+                        </h3>
+                        <div class="h-52 relative" id="chartPerfFeatureImpContainer"></div>
+                    </div>
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-variant shadow-sm">
+                        <h3 class="font-headline-sm text-sm font-bold uppercase tracking-wider text-on-surface mb-3 flex items-center">
+                            <span class="material-symbols-outlined text-primary mr-2">scatter_plot</span> SHAP Summary Plot
+                        </h3>
+                        <div class="h-52 relative" id="chartPerfShapSummaryContainer"></div>
                     </div>
                 </div>
 

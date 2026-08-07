@@ -4,6 +4,8 @@ function initAll() {
     initRatingPills();
     initFormBindings();
     initHistoryStore();
+    initCharts();
+    initPerformanceCharts();
     // Default landing page is Employee Prediction (viewDataEntry)
     window.switchTab('viewDataEntry');
     fetchBackendStatus();
@@ -61,6 +63,7 @@ window.switchTab = function(targetView) {
     } else if (targetView === 'viewPerformance') {
         if (headerTitle) headerTitle.textContent = 'Model Performance';
         if (headerDesc) headerDesc.textContent = 'ML evaluation metrics comparing Logistic Regression, Random Forest, SVM, and XGBoost.';
+        initPerformanceCharts();
     } else if (targetView === 'viewHistory') {
         if (headerTitle) headerTitle.textContent = 'Prediction History';
         if (headerDesc) headerDesc.textContent = 'Historical log of single employee and batch attrition predictions.';
@@ -959,54 +962,153 @@ function renderSvgDeptRankChart() {
 }
 
 function initPerformanceCharts() {
-    renderSvgPerfConfusionMatrix();
-    renderSvgPerfLearningCurve();
-    renderSvgPerfCvChart();
+    try {
+        renderSvgPerfConfusionMatrix();
+        renderSvgPerfRocCurve();
+        renderSvgPerfPrCurve();
+        renderSvgPerfLearningCurve();
+        renderSvgPerfCvChart();
+        renderSvgPerfFeatureImp();
+        renderSvgPerfShapSummary();
+    } catch(e) {
+        console.error('Error initializing performance charts:', e);
+    }
 }
 
 function renderSvgPerfConfusionMatrix() {
     const container = document.getElementById('chartPerfConfusionMatrixContainer');
     if (!container) return;
-    container.innerHTML = `
-        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; height: 100%; min-height: 180px; font-size: 11px;">
-            <div style="background-color: #d7f5e5; padding: 10px; border-radius: 12px; border: 1px solid #6cf8bb; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #006c49;">TN: 236</span></div>
-            <div style="background-color: #ffdad6; padding: 10px; border-radius: 12px; border: 1px solid #ffb4ab; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #ba1a1a;">FP: 10</span></div>
-            <div style="background-color: #fef3c7; padding: 10px; border-radius: 12px; border: 1px solid #fcd34d; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #b45309;">FN: 33</span></div>
-            <div style="background-color: #1f108e; padding: 10px; border-radius: 12px; border: 1px solid #3730a3; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-weight: 800; color: #ffffff;">TP: 21</span></div>
-        </div>
-    `;
+    try {
+        container.innerHTML = `
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; height: 100%; min-height: 180px; font-size: 11px;">
+                <div style="background-color: #d7f5e5; padding: 10px; border-radius: 12px; border: 1px solid #6cf8bb; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-size: 10px; font-weight: 700; color: #006c49; text-transform: uppercase;">True Negative (TN)</span><span style="font-size: 20px; font-weight: 900; color: #006c49;">236</span><span style="font-size: 9px; color: #006c49;">Stay Correct</span></div>
+                <div style="background-color: #ffdad6; padding: 10px; border-radius: 12px; border: 1px solid #ffb4ab; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-size: 10px; font-weight: 700; color: #ba1a1a; text-transform: uppercase;">False Positive (FP)</span><span style="font-size: 20px; font-weight: 900; color: #ba1a1a;">10</span><span style="font-size: 9px; color: #ba1a1a;">False Alarm</span></div>
+                <div style="background-color: #fef3c7; padding: 10px; border-radius: 12px; border: 1px solid #fcd34d; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-size: 10px; font-weight: 700; color: #b45309; text-transform: uppercase;">False Negative (FN)</span><span style="font-size: 20px; font-weight: 900; color: #b45309;">33</span><span style="font-size: 9px; color: #b45309;">Missed Attrition</span></div>
+                <div style="background-color: #1f108e; padding: 10px; border-radius: 12px; border: 1px solid #3730a3; text-align: center; display: flex; flex-direction: column; justify-content: center;"><span style="font-size: 10px; font-weight: 700; color: #ffffff; text-transform: uppercase;">True Positive (TP)</span><span style="font-size: 20px; font-weight: 900; color: #ffffff;">21</span><span style="font-size: 9px; color: #ffffff;">Leave Correct</span></div>
+            </div>
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering Confusion Matrix: ${e.message}</div>`;
+    }
+}
+
+function renderSvgPerfRocCurve() {
+    const container = document.getElementById('chartPerfRocCurveContainer');
+    if (!container) return;
+    try {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-between; padding: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: #464553;">
+                    <span>SVM ROC-AUC: <strong style="color: #1f108e;">0.8241</strong></span>
+                    <span style="color: #006c49;">Optimal Trade-off</span>
+                </div>
+                <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 4px; height: 130px; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 100 100" style="width: 100%; height: 110px;">
+                        <line x1="0" y1="100" x2="100" y2="0" stroke="#c8c4d5" stroke-dasharray="3" stroke-width="1.5"/>
+                        <path d="M 0,100 Q 15,15 100,0" fill="none" stroke="#1f108e" stroke-width="3"/>
+                    </svg>
+                </div>
+            </div>
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering ROC Curve: ${e.message}</div>`;
+    }
+}
+
+function renderSvgPerfPrCurve() {
+    const container = document.getElementById('chartPerfPrCurveContainer');
+    if (!container) return;
+    try {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-between; padding: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: #464553;">
+                    <span>PR-AUC: <strong style="color: #006c49;">0.7892</strong></span>
+                    <span>Threshold: 0.50</span>
+                </div>
+                <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 4px; height: 130px; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 100 100" style="width: 100%; height: 110px;">
+                        <path d="M 0,10 Q 60,15 100,100" fill="none" stroke="#006c49" stroke-width="3"/>
+                    </svg>
+                </div>
+            </div>
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering PR Curve: ${e.message}</div>`;
+    }
 }
 
 function renderSvgPerfLearningCurve() {
     const container = document.getElementById('chartPerfLearningCurveContainer');
     if (!container) return;
-    container.innerHTML = `
-        <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-between; padding: 8px;">
-            <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: #464553;">
-                <span>Training Score: <strong style="color: #1f108e;">89.2%</strong></span>
-                <span>Validation Score: <strong style="color: #006c49;">87.1%</strong></span>
+    try {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-between; padding: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: #464553;">
+                    <span>Train Score: <strong style="color: #1f108e;">89.2%</strong></span>
+                    <span>Val Score: <strong style="color: #006c49;">87.1%</strong></span>
+                </div>
+                <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 4px; height: 130px; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 100 100" style="width: 100%; height: 110px;">
+                        <path d="M 0,20 Q 50,15 100,10" fill="none" stroke="#1f108e" stroke-width="2.5"/>
+                        <path d="M 0,40 Q 50,22 100,14" fill="none" stroke="#006c49" stroke-dasharray="3" stroke-width="2.5"/>
+                    </svg>
+                </div>
             </div>
-            <div style="flex: 1; border-bottom: 1px solid #d3e4fe; border-left: 1px solid #d3e4fe; padding: 8px; height: 140px; display: flex; align-items: center; justify-content: center;">
-                <svg viewBox="0 0 100 100" style="width: 100%; height: 120px;">
-                    <path d="M 0,20 Q 50,15 100,10" fill="none" stroke="#1f108e" stroke-width="2.5"/>
-                    <path d="M 0,40 Q 50,22 100,14" fill="none" stroke="#006c49" stroke-dasharray="3" stroke-width="2.5"/>
-                </svg>
-            </div>
-        </div>
-    `;
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering Learning Curve: ${e.message}</div>`;
+    }
 }
 
 function renderSvgPerfCvChart() {
     const container = document.getElementById('chartPerfCvContainer');
     if (!container) return;
-    container.innerHTML = `
-        <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-around; padding: 8px; font-size: 11px;">
-            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 1 Score</span><span style="font-weight: 800; color: #1f108e;">87.4%</span></div>
-            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 2 Score</span><span style="font-weight: 800; color: #1f108e;">86.8%</span></div>
-            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 3 Score</span><span style="font-weight: 800; color: #1f108e;">88.1%</span></div>
-            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 4 Score</span><span style="font-weight: 800; color: #1f108e;">86.5%</span></div>
-            <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 5 Score</span><span style="font-weight: 800; color: #1f108e;">87.0%</span></div>
-            <div style="padding-top: 4px; border-top: 1px solid #d3e4fe; display: flex; justify-content: space-between; font-weight: 900; color: #006c49;"><span>Mean 5-Fold CV</span><span>87.16% ± 0.58%</span></div>
-        </div>
-    `;
+    try {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-around; padding: 4px; font-size: 11px;">
+                <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 1 Score</span><span style="font-weight: 800; color: #1f108e;">87.4%</span></div>
+                <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 2 Score</span><span style="font-weight: 800; color: #1f108e;">86.8%</span></div>
+                <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 3 Score</span><span style="font-weight: 800; color: #1f108e;">88.1%</span></div>
+                <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 4 Score</span><span style="font-weight: 800; color: #1f108e;">86.5%</span></div>
+                <div style="display: flex; justify-content: space-between; font-weight: 600;"><span>Fold 5 Score</span><span style="font-weight: 800; color: #1f108e;">87.0%</span></div>
+                <div style="padding-top: 4px; border-top: 1px solid #d3e4fe; display: flex; justify-content: space-between; font-weight: 900; color: #006c49;"><span>Mean 5-Fold CV</span><span>87.16% ± 0.58%</span></div>
+            </div>
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering Cross Validation: ${e.message}</div>`;
+    }
+}
+
+function renderSvgPerfFeatureImp() {
+    const container = document.getElementById('chartPerfFeatureImpContainer');
+    if (!container) return;
+    try {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-around; padding: 4px; font-size: 10px;">
+                <div><div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 2px;"><span>OverTime</span><span style="color: #1f108e;">0.245</span></div><div style="width: 100%; background-color: #dce9ff; height: 10px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 95%;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 2px;"><span>Monthly Income</span><span style="color: #1f108e;">0.182</span></div><div style="width: 100%; background-color: #dce9ff; height: 10px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 75%;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 2px;"><span>Age</span><span style="color: #1f108e;">0.145</span></div><div style="width: 100%; background-color: #dce9ff; height: 10px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 60%;"></div></div></div>
+                <div><div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 2px;"><span>Working Years</span><span style="color: #1f108e;">0.128</span></div><div style="width: 100%; background-color: #dce9ff; height: 10px; border-radius: 9999px; overflow: hidden;"><div style="background-color: #1f108e; height: 100%; width: 52%;"></div></div></div>
+            </div>
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering Feature Importance: ${e.message}</div>`;
+    }
+}
+
+function renderSvgPerfShapSummary() {
+    const container = document.getElementById('chartPerfShapSummaryContainer');
+    if (!container) return;
+    try {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; height: 100%; min-height: 180px; justify-content: space-around; padding: 4px; font-size: 10px;">
+                <div style="display: flex; justify-content: space-between; font-weight: 700; color: #464553;"><span>Feature</span><span style="color: #ba1a1a;">High Risk &lt;-- SHAP --&gt; Low Risk</span></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-weight: 600;"><span>OverTime</span><div style="width: 140px; background-color: #ffdad6; height: 12px; border-radius: 4px; display: flex; align-items: center; padding: 0 2px;"><span style="width: 8px; height: 8px; border-radius: 50%; background-color: #ba1a1a;"></span></div></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-weight: 600;"><span>MonthlyIncome</span><div style="width: 140px; background-color: #d7f5e5; height: 12px; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding: 0 2px;"><span style="width: 8px; height: 8px; border-radius: 50%; background-color: #006c49;"></span></div></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-weight: 600;"><span>JobSatisfaction</span><div style="width: 140px; background-color: #d7f5e5; height: 12px; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding: 0 2px;"><span style="width: 8px; height: 8px; border-radius: 50%; background-color: #006c49;"></span></div></div>
+            </div>
+        `;
+    } catch(e) {
+        container.innerHTML = `<div style="color: #ba1a1a; padding: 8px; font-size: 11px;">Error rendering SHAP Summary: ${e.message}</div>`;
+    }
 }
