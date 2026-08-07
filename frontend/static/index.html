@@ -76,23 +76,24 @@
     </div>
 
     <div class="flex flex-col flex-1 py-2 space-y-1.5 px-3 overflow-y-auto">
-        <a href="#" data-view="viewAnalytics" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewAnalytics" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">dashboard</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Analytics Dashboard</span>
         </a>
-        <a href="#" data-view="viewDataEntry" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewDataEntry" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">person_add</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Employee Data Entry</span>
         </a>
-        <a href="#" data-view="viewUpload" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewUpload" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">upload_file</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Batch CSV Upload</span>
         </a>
-        <a href="#" data-view="viewPerformance" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewPerformance" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">monitoring</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Model Benchmarks</span>
         </a>
     </div>
+
 
     <div class="mt-auto px-4 py-4 border-t border-surface-variant">
         <div class="text-xs text-on-surface-variant flex items-center space-x-2">
@@ -469,11 +470,12 @@
 
                     <!-- Submit Button Footer -->
                     <div class="flex justify-end">
-                        <button id="btnSubmitPredict" type="submit" class="bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-all flex items-center space-x-2">
+                        <button id="btnSubmitPredict" type="button" onclick="runSinglePrediction()" class="bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-all flex items-center space-x-2 cursor-pointer">
                             <span class="material-symbols-outlined">analytics</span>
                             <span>Predict Attrition Risk</span>
                         </button>
                     </div>
+
                 </form>
 
                 <!-- Prediction Result Container -->

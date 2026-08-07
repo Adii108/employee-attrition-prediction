@@ -188,23 +188,24 @@ input[type=range]:focus {
     </div>
 
     <div class="flex flex-col flex-1 py-2 space-y-1.5 px-3 overflow-y-auto">
-        <a href="#" data-view="viewAnalytics" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewAnalytics" class="nav-link active text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">dashboard</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Analytics Dashboard</span>
         </a>
-        <a href="#" data-view="viewDataEntry" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewDataEntry" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">person_add</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Employee Data Entry</span>
         </a>
-        <a href="#" data-view="viewUpload" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewUpload" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">upload_file</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Batch CSV Upload</span>
         </a>
-        <a href="#" data-view="viewPerformance" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
+        <a href="javascript:void(0)" data-view="viewPerformance" class="nav-link text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all rounded-xl group">
             <span class="material-symbols-outlined mr-3 group-hover:text-primary transition-colors">monitoring</span>
             <span class="font-label-md text-label-md group-hover:text-primary transition-colors">Model Benchmarks</span>
         </a>
     </div>
+
 
     <div class="mt-auto px-4 py-4 border-t border-surface-variant">
         <div class="text-xs text-on-surface-variant flex items-center space-x-2">
@@ -581,11 +582,12 @@ input[type=range]:focus {
 
                     <!-- Submit Button Footer -->
                     <div class="flex justify-end">
-                        <button id="btnSubmitPredict" type="submit" class="bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-all flex items-center space-x-2">
+                        <button id="btnSubmitPredict" type="button" onclick="runSinglePrediction()" class="bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-all flex items-center space-x-2 cursor-pointer">
                             <span class="material-symbols-outlined">analytics</span>
                             <span>Predict Attrition Risk</span>
                         </button>
                     </div>
+
                 </form>
 
                 <!-- Prediction Result Container -->
@@ -1172,52 +1174,118 @@ async function fetchBackendStatus() {
     }
 }
 
-// 7. Chart.js Dashboard Visualizations
+// 7. High-Performance Dashboard Visualizations (Native SVG Renderers)
 function initCharts() {
-    const distCanvas = document.getElementById('chartProbDist');
-    const deptCanvas = document.getElementById('chartDeptRisk');
-
-    if (distCanvas && typeof Chart !== 'undefined') {
-        new Chart(distCanvas.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['0-10%', '10-20%', '20-30%', '30-40%', '40-50%', '50-60%', '60-70%', '70-80%', '80-90%', '90-100%'],
-                datasets: [
-                    { label: 'Low Risk', data: [450, 380, 210, 80, 0, 0, 0, 0, 0, 0], backgroundColor: '#006c49' },
-                    { label: 'Medium Risk', data: [0, 0, 0, 120, 95, 60, 0, 0, 0, 0], backgroundColor: '#f49d09' },
-                    { label: 'High Risk', data: [0, 0, 0, 0, 0, 20, 35, 15, 8, 4], backgroundColor: '#ba1a1a' }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top' } },
-                scales: { x: { stacked: true }, y: { stacked: true } }
-            }
-        });
-    }
-
-    if (deptCanvas && typeof Chart !== 'undefined') {
-        new Chart(deptCanvas.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['Sales', 'Human Resources', 'Research & Development'],
-                datasets: [{
-                    label: 'Average Attrition Risk (%)',
-                    data: [20.6, 19.0, 13.8],
-                    backgroundColor: ['#1f108e', '#3730a3', '#544fc0'],
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true, max: 30 } }
-            }
-        });
-    }
+    renderSvgProbChart();
+    renderSvgDeptChart();
 }
+
+function renderSvgProbChart() {
+    const canvas = document.getElementById('chartProbDist');
+    if (!canvas) return;
+    const container = canvas.parentElement;
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="flex flex-col h-full justify-between p-2">
+            <div class="flex justify-end space-x-4 mb-2 text-xs font-semibold">
+                <span class="flex items-center"><span class="w-3 h-3 rounded-sm bg-[#006c49] inline-block mr-1"></span> Low Risk</span>
+                <span class="flex items-center"><span class="w-3 h-3 rounded-sm bg-[#f49d09] inline-block mr-1"></span> Medium Risk</span>
+                <span class="flex items-center"><span class="w-3 h-3 rounded-sm bg-[#ba1a1a] inline-block mr-1"></span> High Risk</span>
+            </div>
+            <div class="flex-1 flex items-end justify-between space-x-1.5 border-b border-l border-surface-variant p-2 relative h-48">
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="0-10%: 450 Low Risk">
+                    <div class="w-full bg-[#006c49] rounded-t-sm transition-all group-hover:opacity-80" style="height: 92%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">0-10%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="10-20%: 380 Low Risk">
+                    <div class="w-full bg-[#006c49] rounded-t-sm transition-all group-hover:opacity-80" style="height: 78%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">10-20%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="20-30%: 210 Low Risk">
+                    <div class="w-full bg-[#006c49] rounded-t-sm transition-all group-hover:opacity-80" style="height: 44%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">20-30%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="30-40%: 120 Medium Risk">
+                    <div class="w-full bg-[#f49d09] rounded-t-sm transition-all group-hover:opacity-80" style="height: 26%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">30-40%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="40-50%: 95 Medium Risk">
+                    <div class="w-full bg-[#f49d09] rounded-t-sm transition-all group-hover:opacity-80" style="height: 20%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">40-50%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="50-60%: 60 Medium, 20 High Risk">
+                    <div class="w-full bg-[#f49d09] rounded-t-sm transition-all group-hover:opacity-80" style="height: 16%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">50-60%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="60-70%: 35 High Risk">
+                    <div class="w-full bg-[#ba1a1a] rounded-t-sm transition-all group-hover:opacity-80" style="height: 10%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">60-70%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="70-80%: 15 High Risk">
+                    <div class="w-full bg-[#ba1a1a] rounded-t-sm transition-all group-hover:opacity-80" style="height: 6%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">70-80%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="80-90%: 8 High Risk">
+                    <div class="w-full bg-[#ba1a1a] rounded-t-sm transition-all group-hover:opacity-80" style="height: 4%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">80-90%</span>
+                </div>
+                <div class="flex-1 flex flex-col justify-end items-center h-full group relative cursor-pointer" title="90-100%: 4 High Risk">
+                    <div class="w-full bg-[#ba1a1a] rounded-t-sm transition-all group-hover:opacity-80" style="height: 2%;"></div>
+                    <span class="text-[10px] text-on-surface-variant mt-1 font-medium">90-100%</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderSvgDeptChart() {
+    const canvas = document.getElementById('chartDeptRisk');
+    if (!canvas) return;
+    const container = canvas.parentElement;
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="flex flex-col h-full justify-between p-2">
+            <div class="flex justify-between items-center mb-2 text-xs font-semibold text-on-surface-variant">
+                <span>Department Name</span>
+                <span>Average Risk Rate (%)</span>
+            </div>
+            <div class="flex-1 flex flex-col justify-around border-b border-l border-surface-variant p-3 space-y-4">
+                <div>
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span class="text-on-surface">Sales</span>
+                        <span class="text-primary font-extrabold">20.6%</span>
+                    </div>
+                    <div class="w-full bg-surface-container-high h-4 rounded-full overflow-hidden">
+                        <div class="bg-gradient-to-r from-[#1f108e] to-[#3730a3] h-full rounded-full transition-all duration-500" style="width: 68.6%;"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span class="text-on-surface">Human Resources</span>
+                        <span class="text-primary font-extrabold">19.0%</span>
+                    </div>
+                    <div class="w-full bg-surface-container-high h-4 rounded-full overflow-hidden">
+                        <div class="bg-gradient-to-r from-[#1f108e] to-[#544fc0] h-full rounded-full transition-all duration-500" style="width: 63.3%;"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span class="text-on-surface">Research & Development</span>
+                        <span class="text-primary font-extrabold">13.8%</span>
+                    </div>
+                    <div class="w-full bg-surface-container-high h-4 rounded-full overflow-hidden">
+                        <div class="bg-gradient-to-r from-[#1f108e] to-[#777584] h-full rounded-full transition-all duration-500" style="width: 46.0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 
 </script>
 </body>
