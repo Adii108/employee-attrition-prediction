@@ -477,9 +477,7 @@ function initCharts() {
 }
 
 function renderSvgProbChart() {
-    const canvas = document.getElementById('chartProbDist');
-    if (!canvas) return;
-    const container = canvas.parentElement;
+    const container = document.getElementById('chartProbDistContainer') || document.getElementById('chartProbDist')?.parentElement;
     if (!container) return;
 
     container.innerHTML = `
@@ -536,9 +534,7 @@ function renderSvgProbChart() {
 }
 
 function renderSvgDeptChart() {
-    const canvas = document.getElementById('chartDeptRisk');
-    if (!canvas) return;
-    const container = canvas.parentElement;
+    const container = document.getElementById('chartDeptRiskContainer') || document.getElementById('chartDeptRisk')?.parentElement;
     if (!container) return;
 
     container.innerHTML = `
@@ -581,4 +577,5 @@ function renderSvgDeptChart() {
         </div>
     `;
 }
+
 

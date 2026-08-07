@@ -37,19 +37,20 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Path to standalone Stitch HTML bundle
-HTML_PATH = os.path.join(BASE_DIR, "frontend", "static", "standalone_app.html")
+# Construct bundled Stitch HTML dynamically on every run
+STATIC_DIR = os.path.join(BASE_DIR, "frontend", "static")
+index_file = os.path.join(STATIC_DIR, "index.html")
+css_file = os.path.join(STATIC_DIR, "css", "stitch.css")
+js_file = os.path.join(STATIC_DIR, "js", "app.js")
 
-if not os.path.exists(HTML_PATH):
-    try:
-        from scripts.build_standalone_html import build_standalone
-        build_standalone()
-    except Exception as e:
-        st.error(f"Failed to build Stitch UI bundle: {e}")
+with open(index_file, "r", encoding="utf-8") as f:
+    html_content = f.read()
+with open(css_file, "r", encoding="utf-8") as f:
+    css_content = f.read()
+with open(js_file, "r", encoding="utf-8") as f:
+    js_content = f.read()
 
-if os.path.exists(HTML_PATH):
-    with open(HTML_PATH, "r", encoding="utf-8") as f:
-        html_content = f.read()
-    components.html(html_content, height=1000, scrolling=True)
-else:
-    st.error("Stitch UI template not found.")
+html_content = html_content.replace('<link rel="stylesheet" href="/static/css/stitch.css"/>', f'<style>\n{css_content}\n</style>')
+html_content = html_content.replace('<script src="/static/js/app.js"></script>', f'<script>\n{js_content}\n</script>')
+
+components.html(html_content, height=1100, scrolling=True)
