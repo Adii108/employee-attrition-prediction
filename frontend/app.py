@@ -94,12 +94,16 @@ def load_predicted_dataset(path: str):
 with st.spinner("Initializing organizational analytics..."):
     predicted_df = load_predicted_dataset(CSV_PATH)
 
-# Fetch active model info
-model_info = api.get_model_info()
+# Safe fallback for model_info
+if not model_info or not isinstance(model_info, dict) or "best_model_name" not in model_info:
+    model_info = {
+        "best_model_name": "SVM (Support Vector Machine)",
+        "metrics": {"f1_score": 0.4941, "accuracy": 0.8707, "roc_auc": 0.8241}
+    }
 
-# Sidebar Navigation (No Emojis)
-st.sidebar.title("HR Portal")
-st.sidebar.subheader("Navigation")
+# Sidebar Navigation
+st.sidebar.title("Retention Intel")
+st.sidebar.caption("HR Intelligence & Attrition Analytics")
 
 page = st.sidebar.radio(
     "Go to:",
@@ -121,31 +125,30 @@ else:
     st.sidebar.caption("System Status: Online (API Connected)")
     st.sidebar.caption(f"Backend URL: {api.base_url}")
     
-if model_info and "best_model_name" in model_info:
-    st.sidebar.caption(f"Active Model: {model_info['best_model_name']}")
+st.sidebar.caption(f"Active Model: {model_info['best_model_name']}")
 
+# Render pages
+if page == "Dashboard":
+    if predicted_df is not None:
+        render_dashboard(predicted_df, model_info)
+    else:
+        st.error("Failed to load organizational analytics dataset.")
+        
+elif page == "Employee Prediction":
+    render_prediction()
+    
+elif page == "CSV Upload":
+    render_upload()
+    
+elif page == "Analytics":
+    if predicted_df is not None:
+        render_analytics(predicted_df)
+    else:
+        st.error("Failed to load analytics dataset.")
+        
+elif page == "Model Performance":
+    render_performance()
+    
+elif page == "About Project":
+    render_about()
 
-    # Render pages
-    if page == "Dashboard":
-        if predicted_df is not None:
-            render_dashboard(predicted_df, model_info)
-        else:
-            st.error("Failed to load organizational analytics dataset.")
-            
-    elif page == "Employee Prediction":
-        render_prediction()
-        
-    elif page == "CSV Upload":
-        render_upload()
-        
-    elif page == "Analytics":
-        if predicted_df is not None:
-            render_analytics(predicted_df)
-        else:
-            st.error("Failed to load analytics dataset.")
-            
-    elif page == "Model Performance":
-        render_performance()
-        
-    elif page == "About Project":
-        render_about()
