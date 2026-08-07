@@ -20,10 +20,39 @@ from frontend.utils.api_client import APIClient
 
 # Page Config
 st.set_page_config(
-    page_title="HR Attrition Prediction System",
+    page_title="Retention Intel - HR Intelligence System",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Custom Stitch CSS Injection
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+    
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4 {
+        font-family: 'Outfit', sans-serif !important;
+        color: #1f108e !important;
+    }
+    .stButton>button {
+        background-color: #1f108e !important;
+        color: #ffffff !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        border: none !important;
+        padding: 0.5rem 1.25rem !important;
+    }
+    .stButton>button:hover {
+        background-color: #3730a3 !important;
+        color: #ffffff !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 
 # API Client Initialization
 api = APIClient()

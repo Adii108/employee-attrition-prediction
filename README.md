@@ -109,8 +109,15 @@ python -m backend.app
 ```
 
 ### 4. Run the Streamlit Frontend
-In a separate terminal, launch the Streamlit frontend:
+Launch the Streamlit app locally:
 ```bash
-streamlit run frontend/app.py
+streamlit run app.py
 ```
 Open [http://localhost:8501](http://localhost:8501) in your browser.
+
+### 5. Streamlit Cloud Deployment
+To deploy this application to **Streamlit Community Cloud**:
+1. Push your repository to GitHub.
+2. Sign in to [share.streamlit.io](https://share.streamlit.io/).
+3. Create a new app pointing to repository root `app.py`.
+4. Detailed instructions are available in [DEPLOYMENT.md](file:///c:/Users/adity/Desktop/Employee_attrition/DEPLOYMENT.md).

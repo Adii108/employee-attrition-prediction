@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employee Profile Data Entry Form - Retention Intel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#e2dfff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#3b35a7",
+                        "on-surface-variant": "#464553",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#a9a7ff",
+                        "primary-container": "#3730a3",
+                        "inverse-primary": "#c3c0ff",
+                        "primary": "#1f108e",
+                        "on-background": "#0b1c30",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-variant": "#d3e4fe",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary-container": "#f49d09",
+                        "surface": "#f8f9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#0f0069",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-tint": "#544fc0",
+                        "tertiary": "#422700",
+                        "outline": "#777584",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface": "#0b1c30",
+                        "outline-variant": "#c8c4d5",
+                        "secondary": "#006c49",
+                        "surface-container": "#e5eeff",
+                        "inverse-surface": "#213145",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#603b00",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "background": "#f8f9ff",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "inline-gutter": "1rem",
+                        "container-margin": "1rem",
+                        "stack-gap-md": "1rem",
+                        "stack-gap-lg": "1.5rem",
+                        "stack-gap-sm": "0.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "body-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #1f108e;
+            cursor: pointer;
+            margin-top: -6px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #dce9ff;
+            border-radius: 2px;
+        }
+        .rating-star:hover ~ .rating-star { opacity: 0.5; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md pt-16 pb-24 md:pb-8 flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-bright shadow-sm">
+<div class="flex justify-between items-center px-4 h-16 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<img alt="Executive User Profile" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDiwqcfCT6bQ81jsqdmcBbwUks6qrSW56RYKp504F4ybCrxFzoTRNFsHHgJMiPcPUprn95Quqa30EhDy5dnBEhGYu3zBLyCPdiSKhf22h6EraBQy1Li1Q59gPWsEvRSbgHEPDnx5IEpBPD3t6fQVQ9YnzfOSRRjzj6psfR0gOen0ZTURDF_qXnyVsjDnsT6UHjoXQ_j1NALmdvU-AJV4Hwb2FhiJ4ZJRkCOGsF6VHQfCj7TrpgwEHEJw"/>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">Retention Intel</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-3xl px-container-margin py-stack-gap-lg flex-1">
+<div class="mb-stack-gap-lg text-center md:text-left">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">Employee Profile</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Enter employee data points to generate an attrition risk prediction.</p>
+</div>
+<form class="space-y-stack-gap-md" onsubmit="event.preventDefault(); alert('Prediction initialized.');">
+<!-- Tab 1: Demographics & Sentiment -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-surface-container overflow-hidden">
+<button class="w-full px-6 py-4 flex justify-between items-center bg-surface hover:bg-surface-container-low transition-colors" onclick="toggleAccordion('tab1')" type="button">
+<span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">person</span>
+                        Demographics &amp; Sentiment
+                    </span>
+<span class="material-symbols-outlined text-outline transition-transform" id="icon-tab1">expand_more</span>
+</button>
+<div class="px-6 pb-6 pt-2 hidden space-y-6" id="content-tab1">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant">Age</label>
+<span class="font-body-sm text-body-sm text-primary font-semibold" id="ageVal">35</span>
+</div>
+<input class="w-full" max="100" min="18" oninput="document.getElementById('ageVal').innerText = this.value" type="range" value="35"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant block">Gender</label>
+<select class="w-full h-11 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+<option>Male</option>
+<option>Female</option>
+<option>Non-Binary</option>
+<option>Prefer not to say</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant block">Marital Status</label>
+<select class="w-full h-11 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+<option>Single</option>
+<option>Married</option>
+<option>Divorced</option>
+</select>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant">Distance From Home (miles)</label>
+<span class="font-body-sm text-body-sm text-primary font-semibold" id="distVal">10</span>
+</div>
+<input class="w-full" max="30" min="1" oninput="document.getElementById('distVal').innerText = this.value" type="range" value="10"/>
+</div>
+</div>
+<div class="h-px bg-surface-container my-4"></div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-wider">Sentiment Ratings</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex justify-between items-center p-3 bg-surface-bright rounded-lg border border-surface-container">
+<span class="font-body-sm text-body-sm text-on-surface">Job Satisfaction</span>
+<div class="flex gap-1 text-primary cursor-pointer">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg outline-variant">star</span>
+</div>
+</div>
+<div class="flex justify-between items-center p-3 bg-surface-bright rounded-lg border border-surface-container">
+<span class="font-body-sm text-body-sm text-on-surface">Environment Satisfaction</span>
+<div class="flex gap-1 text-primary cursor-pointer">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg outline-variant">star</span>
+<span class="material-symbols-outlined text-lg outline-variant">star</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Predict Button -->
+<div class="pt-6">
+<button class="w-full h-12 bg-primary text-on-primary font-headline-sm text-headline-sm rounded-lg shadow-sm hover:bg-surface-tint transition-all active:scale-95 flex justify-center items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-xl">psychiatry</span>
+                    Predict Attrition
+                </button>
+</div>
+</form>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-surface-container-lowest shadow-[0_-4px_12px_rgba(55,48,163,0.08)] md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1.5 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined text-2xl mb-1" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label-md text-label-md">Forms</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<script>
+        function toggleAccordion(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+        // Open first tab by default
+        toggleAccordion('tab1');
+    </script>
+</body></html>
