@@ -94,12 +94,18 @@ def load_predicted_dataset(path: str):
 with st.spinner("Initializing organizational analytics..."):
     predicted_df = load_predicted_dataset(CSV_PATH)
 
-# Safe fallback for model_info
+# Fetch active model info with safe fallback
+try:
+    model_info = api.get_model_info()
+except Exception:
+    model_info = None
+
 if not model_info or not isinstance(model_info, dict) or "best_model_name" not in model_info:
     model_info = {
         "best_model_name": "SVM (Support Vector Machine)",
         "metrics": {"f1_score": 0.4941, "accuracy": 0.8707, "roc_auc": 0.8241}
     }
+
 
 # Sidebar Navigation
 st.sidebar.title("Retention Intel")
