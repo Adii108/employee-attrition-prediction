@@ -701,13 +701,38 @@ input[type=range]:focus {
 <!-- Main App Script -->
 <script>
 // Retention Intel Application Logic
-document.addEventListener('DOMContentLoaded', () => {
+function initAll() {
     initNavigation();
     initRatingPills();
     initFormBindings();
-    initCharts();
+    initChartsWithRetry();
     fetchBackendStatus();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+} else {
+    initAll();
+}
+
+function initChartsWithRetry() {
+    if (typeof Chart !== 'undefined') {
+        initCharts();
+    } else {
+        let attempts = 0;
+        const interval = setInterval(() => {
+            attempts++;
+            if (typeof Chart !== 'undefined') {
+                clearInterval(interval);
+                initCharts();
+            } else if (attempts > 40) {
+                clearInterval(interval);
+                console.warn('Chart.js load timed out.');
+            }
+        }, 100);
+    }
+}
+
 
 // 1. Navigation Controller
 function initNavigation() {
